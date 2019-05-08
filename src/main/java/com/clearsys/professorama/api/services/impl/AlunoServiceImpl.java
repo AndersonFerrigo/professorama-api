@@ -25,9 +25,24 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
+	public Optional<Aluno> buscarPorUsuario(String user) {
+		log.info("Buscando um aluno pelo usuario {}", user);
+		return Optional.ofNullable(alunoRepository.findByUsuario(user)); 
+	}
+
+	@Override
+	public Optional<Aluno> buscarPorRA(String ra) {
+		log.info("Buscando um aluno pelo RA {}", ra);
+		return Optional.ofNullable(alunoRepository.findBySenha(ra)); 
+
+	}
+
+	
+	@Override
 	public Aluno persistir(Aluno aluno) {
 		log.info("Persistindo aluno {}", aluno);
 		return this.alunoRepository.save(aluno);
 	}
-		
+
+			
 }

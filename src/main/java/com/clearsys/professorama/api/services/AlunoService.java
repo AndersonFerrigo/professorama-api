@@ -14,6 +14,25 @@ public interface AlunoService {
 	 */
 	Optional<Aluno> buscarPorId(int id); 
 	
+	/**
+	 * Retorna um Usuario de determinado aluno
+	 * 
+	 * @param usuario
+	 * @return Optional<Aluno> 
+	 */
+	
+	Optional<Aluno> buscarPorUsuario(String user); 
+	
+	/**
+	 * Retorna um RA de determinado aluno
+	 * 
+	 * @param ra
+	 * @return Optional<Aluno> 
+	 */
+	
+	Optional<Aluno> buscarPorRA(String ra); 
+	
+	
 	
 	/**
 	 * Cadastra um novo aluno na base de dados
