@@ -15,7 +15,7 @@ import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.utils.PasswordUtils;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest()
+@SpringBootTest(properties="spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration")
 @ActiveProfiles("test")
 public class AlunoRepositoryTest {
 
