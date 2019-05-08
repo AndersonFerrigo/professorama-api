@@ -24,7 +24,3 @@ CREATE TABLE `atividade`(
 	`professor_id` int DEFAULT null,		
 	`aluno_id` int DEFAULT null 
 ); 
-
-ALTER TABLE `atividade`
-  ADD CONSTRAINT FOREIGN KEY (`aluno_id`) REFERENCES `aluno`(`id`), 	 
-  ADD CONSTRAINT FOREIGN KEY (`professor_id`) REFERENCES `professor`(`id`); 	 

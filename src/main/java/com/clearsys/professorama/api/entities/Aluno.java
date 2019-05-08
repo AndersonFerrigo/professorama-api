@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+@SpringBootApplication
 @Entity
 @Table(name = "aluno") 
 public class Aluno implements Serializable{

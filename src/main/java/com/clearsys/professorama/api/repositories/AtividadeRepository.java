@@ -1,4 +1,4 @@
-package br.com.clearsys.professorama.api.repositories;
+package com.clearsys.professorama.api.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
