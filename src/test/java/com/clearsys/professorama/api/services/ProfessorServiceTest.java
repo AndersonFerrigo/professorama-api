@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,7 +19,7 @@ import com.clearsys.professorama.api.entities.Professor;
 import com.clearsys.professorama.api.repositories.ProfessorRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties="spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration")
+@SpringBootTest()
 @ActiveProfiles("test")
 public class ProfessorServiceTest {
 
@@ -29,21 +29,14 @@ public class ProfessorServiceTest {
 	@Autowired
 	private ProfessorService professorService;
 	
-	private static final int ID = 12;
 	private static final String NOME = "Roberto";
 	
 	@Before
 	public void testBuscaProfessorPorId() {
-		BDDMockito.given(this.professorRepository.findById(Mockito.anyInt())).willReturn(new Professor());
-		BDDMockito.given(this.professorRepository.findByNome(Mockito.anyString())).willReturn(new Professor());
+		BDDMockito.given(this.professorRepository.findByNome(ArgumentMatchers.anyString())).willReturn(new Professor());
 	
 	}
 	
-	@Test
-	public void testBuscaPorId() {
-		Optional<Professor> professor = this.professorService.buscarPorId(ID);
-	    assertTrue(professor.isPresent());
-	}
 	
 	@Test
 	public void testBuscarPorNome() {

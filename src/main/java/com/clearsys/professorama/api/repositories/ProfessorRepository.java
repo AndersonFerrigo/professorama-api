@@ -6,9 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.clearsys.professorama.api.entities.Professor;
 
 @Transactional(readOnly = true)
-public interface ProfessorRepository extends JpaRepository<Professor, Long>{
+public interface ProfessorRepository extends JpaRepository<Professor, String>{
 	
-	Professor findById(int id);
 	Professor findByNome(String nome);
 	Professor findByUsuario(String usuario);
 	Professor findBySenha(String senha);

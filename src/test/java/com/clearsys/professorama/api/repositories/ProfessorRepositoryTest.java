@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.clearsys.professorama.api.entities.Professor;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties="spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration")
+@SpringBootTest()
 @ActiveProfiles("test")
 public class ProfessorRepositoryTest {
 

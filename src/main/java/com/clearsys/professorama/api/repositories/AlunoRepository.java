@@ -9,7 +9,6 @@ import com.clearsys.professorama.api.entities.Aluno;
 @Transactional(readOnly = true)
 public interface AlunoRepository extends JpaRepository<Aluno, String>{
 	
-	Aluno findById(int id);
 	Aluno findByUsuario(String user); 
 	Aluno findBySenha(String password);
 	Aluno findByNivelEscolar(String nivelEscolar);

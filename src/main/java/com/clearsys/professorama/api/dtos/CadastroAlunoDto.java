@@ -7,12 +7,12 @@ import org.hibernate.validator.constraints.Length;
 public class CadastroAlunoDto {
 
 	private long id;
-	private int serie;
-	private String nome;
-	private String usuario;
-	private String ra;
 	private String nivelEscolar;
-
+	private String nome;
+	private String senha;
+	private int serie;
+	private String usuario;
+	
 	public CadastroAlunoDto() {
 	}
 
@@ -44,12 +44,12 @@ public class CadastroAlunoDto {
 	}
 
 	@NotNull(message = "O campo RA não pode ser vazio")
-	public String getRa() {
-		return ra;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setRa(String ra) {
-		this.ra = ra;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@NotNull(message = "O campo nível escolar não pode ser vazio")
@@ -72,9 +72,10 @@ public class CadastroAlunoDto {
 
 	@Override
 	public String toString() {
-		return "CadastroAlunoDto [id=" + id + ", serie=" + serie + ", nome=" + nome + ", usuario=" + usuario + ", ra="
-				+ ra + ", nivelEscolar=" + nivelEscolar + "]";
+		return "CadastroAlunoDto [id=" + id + ", nivelEscolar=" + nivelEscolar + ", nome=" + nome + ", senha=" + senha
+				+ ", serie=" + serie + ", usuario=" + usuario + "]";
 	}
+
 	
 	
 }

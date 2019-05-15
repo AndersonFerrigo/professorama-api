@@ -2,9 +2,9 @@ CREATE TABLE `aluno`(
 	`id` int not null PRIMARY KEY AUTO_INCREMENT,
 	`nome` varchar(60) not null,
 	`nivel_escolar` varchar(20) not null,
-	`ano_letivo` varchar(20) not null,
+	`serie` varchar(20) not null,
 	`usuario` varchar(50) not null,
-	`senha` varchar(50) not null
+	`senha` varchar(500) not null
 );
 	
 CREATE TABLE `professor`(

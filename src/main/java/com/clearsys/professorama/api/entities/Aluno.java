@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-@SpringBootApplication
 @Entity
 @Table(name = "aluno") 
 public class Aluno implements Serializable{
@@ -40,7 +38,7 @@ public class Aluno implements Serializable{
 		this.id = id;
 	}
 		
-	@Column(name="aluno_nome", nullable = false)
+	@Column(name="nome", nullable = false)
 	public String getNome() {
 		return nome;
 	}
@@ -49,7 +47,7 @@ public class Aluno implements Serializable{
 		this.nome = nome;
 	}
 
-	@Column(name="aluno_serie", nullable = false)
+	@Column(name="serie", nullable = false)
 	public int getSerie() {
 		return serie;
 	}
@@ -58,7 +56,7 @@ public class Aluno implements Serializable{
 		this.serie = serie;
 	}
 	
-	@Column(name="aluno_nivelEscolar", nullable = false)
+	@Column(name="nivel_escolar", nullable = false)
 	public String getNivelEscolar() {
 		return nivelEscolar;
 	}
@@ -67,7 +65,7 @@ public class Aluno implements Serializable{
 		this.nivelEscolar = nivelEscolar;
 	}
 	
-	@Column(name="aluno_usuario", nullable = false)
+	@Column(name="usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
 	}
@@ -76,7 +74,7 @@ public class Aluno implements Serializable{
 		this.usuario = usuario;
 	}
 	
-	@Column(name="aluno_senha", nullable = false)
+	@Column(name="senha", nullable = false)
 	public String getSenha() {
 		return senha;
 	}

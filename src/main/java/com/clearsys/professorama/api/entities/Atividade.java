@@ -22,8 +22,8 @@ public class Atividade implements Serializable{
 	private String materia;
 	private String anoDestinado;
 	private String nivelEscolar;
-	private String data_inicio;
-	private String data_entrega;
+	private String dataInicio;
+	private String dataEntrega;
 	private String descricao;
 	private String professor;
 	
@@ -40,7 +40,7 @@ public class Atividade implements Serializable{
 		this.id = id;
 	}
 	
-	@Column(name = "atividade_materia", nullable = false)
+	@Column(name = "materia", nullable = false)
 	public String getMateria() {
 		return materia;
 	}
@@ -49,7 +49,7 @@ public class Atividade implements Serializable{
 		this.materia = materia;
 	}
 	
-	@Column(name = "atividade_ano_destino")
+	@Column(name = "ano_destino")
 	public String getAnoDestinado() {
 		return anoDestinado;
 	}
@@ -58,7 +58,7 @@ public class Atividade implements Serializable{
 		this.anoDestinado = anoDestinado;
 	}
 	
-	@Column(name = "atividade_nivel_escolar", nullable = false)
+	@Column(name = "nivel_escolar", nullable = false)
 	public String getNivelEscolar() {
 		return nivelEscolar;
 	}
@@ -67,25 +67,25 @@ public class Atividade implements Serializable{
 		this.nivelEscolar = nivelEscolar;
 	}
 	
-	@Column(name = "atividade_data_inicio", nullable = false)
-	public String getData_inicio() {
-		return data_inicio;
+	@Column(name = "data_inicio", nullable = false)
+	public String getDataInicio() {
+		return dataInicio;
 	}
 	
-	public void setData_inicio(String data_inicio) {
-		this.data_inicio = data_inicio;
+	public void setDataInicio(String dataInicio) {
+		this.dataInicio = dataInicio;
 	}
 	
-	@Column(name = "atividade_data_entrega", nullable = false)
-	public String getData_entrega() {
-		return data_entrega;
+	@Column(name = "data_entrega", nullable = false)
+	public String getDataEntrega() {
+		return dataEntrega;
 	}
 	
-	public void setData_entrega(String data_entrega) {
-		this.data_entrega = data_entrega;
+	public void setDataEntrega(String dataEntrega) {
+		this.dataEntrega = dataEntrega;
 	}
 	
-	@Column(name = "atividade_descricao", nullable = false)
+	@Column(name = "descricao", nullable = false)
 	public String getDescricao() {
 		return descricao;
 	}
@@ -94,7 +94,7 @@ public class Atividade implements Serializable{
 		this.descricao = descricao;
 	}
 
-	@Column(name = "atividade_professor", nullable = false)
+	@Column(name = "professor", nullable = false)
 	public String getProfessor() {
 		return professor;
 	}
@@ -106,7 +106,7 @@ public class Atividade implements Serializable{
 	@Override
 	public String toString() {
 		return "Atividade [id=" + id + ", materia=" + materia + ", anoDestinado=" + anoDestinado + ", nivelEscolar="
-				+ nivelEscolar + ", data_inicio=" + data_inicio + ", data_entrega=" + data_entrega + ", descricao="
+				+ nivelEscolar + ", data_inicio=" + dataInicio + ", data_entrega=" + dataEntrega + ", descricao="
 				+ descricao + ", professor=" + professor + "]";
 	}
 	

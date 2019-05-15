@@ -13,30 +13,29 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.clearsys.professorama.api.entities.Aluno;
-import com.clearsys.professorama.api.repositories.AlunoRepository;
+import com.clearsys.professorama.api.entities.Atividade;
+import com.clearsys.professorama.api.repositories.AtividadeRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 @ActiveProfiles("test")
-public class AlunoServiceTest {
+public class AtividadeServiceTest {
 	
 	@MockBean
-	private AlunoRepository alunoRepository;
+	private AtividadeRepository atividadeRepository;
 	
 	@Autowired
-	private AlunoService alunoService;
-	
-	
+	private AtividadeService atividadeService;
+
 	@Before
-	public void setUp() throws Exception{
-		BDDMockito.given(this.alunoRepository.save(ArgumentMatchers.any(Aluno.class))).willReturn(new Aluno());
+	public void setup () throws Exception{
+		BDDMockito.given(this.atividadeRepository.save(ArgumentMatchers.any(Atividade.class))).willReturn(new Atividade());
 	}
-	
 	
 	@Test
-	public void testPersistirAluno() {
-		Aluno aluno = this.alunoService.persistir(new Aluno());
-		assertNotNull(aluno);
+	public void testPersistirAtividade() {
+		Atividade atividade = this.atividadeService.persistir(new Atividade());
+		assertNotNull(atividade);
 	}
+	
 }

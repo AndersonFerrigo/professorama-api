@@ -7,14 +7,6 @@ import com.clearsys.professorama.api.entities.Aluno;
 public interface AlunoService {
 	
 	/**
-	 * Retorna um id de determinado aluno
-	 * 
-	 * @param id
-	 * @return Optional<Aluno> 
-	 */
-	Optional<Aluno> buscarPorId(int id); 
-	
-	/**
 	 * Retorna um Usuario de determinado aluno
 	 * 
 	 * @param usuario

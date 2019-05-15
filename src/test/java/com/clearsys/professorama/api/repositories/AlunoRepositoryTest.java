@@ -15,7 +15,7 @@ import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.utils.PasswordUtils;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties="spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration")
+@SpringBootTest()
 @ActiveProfiles("test")
 public class AlunoRepositoryTest {
 
@@ -65,17 +65,6 @@ public class AlunoRepositoryTest {
 		Aluno aluno = this.alunoRepository.findBySerie(anoLetivo);
 		assertEquals(anoLetivo, aluno.getSerie());
 	}
-	
-	/*
-	private Aluno obterDadosAluno() throws Exception{
-		Aluno aluno = new Aluno();
-		aluno.setNome(nome);
-		aluno.setNivelEscolar(nivelEscolar);
-		aluno.setSerie(anoLetivo);
-		aluno.setUsuario(user);
-		aluno.setSenha(PasswordUtils.gerarBCrypt(password));
-		
-		return aluno;
-	}*/
+
 	
 }

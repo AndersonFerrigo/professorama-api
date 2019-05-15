@@ -6,13 +6,7 @@ import com.clearsys.professorama.api.entities.Professor;
 
 public interface ProfessorService {
 	
-	/**
-	 * 
-	 * @param id
-	 * @return Optional<Professor>
-	 */
-	Optional<Professor> buscarPorId(int id);
-
+	
 	/**
 	 * 
 	 * @param nome

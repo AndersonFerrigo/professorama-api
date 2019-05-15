@@ -69,10 +69,8 @@ public class CadastroAlunoController {
 	 * @param result
 	 */
 	private void validarDadosExixtentes(CadastroAlunoDto alunoDto, BindingResult result) {
-		this.alunoService.buscarPorRA(alunoDto.getRa())
+		this.alunoService.buscarPorRA(alunoDto.getSenha())
 				.ifPresent(alu->result.addError(new ObjectError("Aluno", "Ra já existe")));
-		
-		
 		this.alunoService.buscarPorUsuario(alunoDto.getUsuario())
 				.ifPresent(alu->result.addError(new ObjectError("Aluno", "Usuario já existe")));
 		
@@ -92,7 +90,7 @@ public class CadastroAlunoController {
 		Aluno aluno = new Aluno();
 		
 		aluno.setNome(alunoDto.getNome());
-		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getRa()));
+		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
 		aluno.setUsuario(alunoDto.getUsuario());
 		aluno.setSerie(alunoDto.getSerie());
 		aluno.setNivelEscolar(alunoDto.getNivelEscolar());
@@ -104,10 +102,10 @@ public class CadastroAlunoController {
 	
 		CadastroAlunoDto alunoDto = new CadastroAlunoDto();
 		
-		alunoDto.setId(aluno.getId());
+		//alunoDto.setId(aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setUsuario(aluno.getUsuario());
-		alunoDto.setRa(aluno.getSenha());
+		alunoDto.setSenha(aluno.getSenha());
 		alunoDto.setSerie(aluno.getSerie());
 		alunoDto.setNivelEscolar(aluno.getNivelEscolar());
 		

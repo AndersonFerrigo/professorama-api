@@ -18,11 +18,6 @@ public class AlunoServiceImpl implements AlunoService{
 	@Autowired
 	private AlunoRepository alunoRepository;
 
-	@Override
-	public Optional<Aluno> buscarPorId(int id) {
-		log.info("Buscando um aluno pelo id {}", id);
-		return Optional.ofNullable(alunoRepository.findById(id)); 
-	}
 
 	@Override
 	public Optional<Aluno> buscarPorUsuario(String user) {
@@ -31,9 +26,9 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
-	public Optional<Aluno> buscarPorRA(String ra) {
-		log.info("Buscando um aluno pelo RA {}", ra);
-		return Optional.ofNullable(alunoRepository.findBySenha(ra)); 
+	public Optional<Aluno> buscarPorRA(String senha) {
+		log.info("Buscando um aluno pelo RA {}", senha);
+		return Optional.ofNullable(alunoRepository.findBySenha(senha)); 
 
 	}
 

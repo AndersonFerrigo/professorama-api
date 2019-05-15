@@ -20,11 +20,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Autowired
 	private ProfessorRepository professorRepository;
 
-	@Override
-	public Optional<Professor> buscarPorId(int id) {
-		log.info("Buscando um professor através di id {}",id);
-		return Optional.ofNullable(professorRepository.findById(id));
-	}
 
 	@Override
 	public Optional<Professor> buscarPorNome(String nome) {
