@@ -26,5 +26,26 @@ public class ProfessorServiceImpl implements ProfessorService {
 		log.info("Buscando um professor pelo nome {} ", nome);
 		return Optional.ofNullable(professorRepository.findByNome(nome));
 	}
+
+
+	@Override
+	public Optional<Professor> buscarPorMateria(String materia) {
+		log.info("Buscando um professor pela materia {} ", materia);
+		return Optional.ofNullable(professorRepository.findByMateria(materia));
+	}
+
+
+	@Override
+	public Optional<Professor> buscarPorUsuario(String usuario) {
+		log.info("Buscando um professor pelo usuario {} ", usuario);
+		return Optional.ofNullable(professorRepository.findByUsuario(usuario));
+	}
+
+
+	@Override
+	public Optional<Professor> buscarPorId(Long id) {
+		log.info("Buscando um professor pelo id {} ", id);
+		return professorRepository.findById(id);
+	}
 	
 }

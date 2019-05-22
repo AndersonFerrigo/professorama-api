@@ -1,16 +1,27 @@
 package com.clearsys.professorama.api.repositories;
 
 
+import java.util.Optional;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.clearsys.professorama.api.entities.Aluno;
 
 @Transactional(readOnly = true)
-public interface AlunoRepository extends JpaRepository<Aluno, String>{
+@NamedQueries({
+	@NamedQuery(name = "AlunoRepository.systemLogin",
+			query="select * from aluno where usuario = :usuario and senha = :senha")
+})
+
+public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 	
+	Optional<Aluno> findById(Long id);
+	Aluno systemLogin(@Param ("usuario") String usuario, @Param("senha") String senha);
 	Aluno findByUsuario(String user); 
 	Aluno findBySenha(String password);
-	Aluno findByNivelEscolar(String nivelEscolar);
-	Aluno findBySerie(int serie);
+	Aluno findBySerie(String serie);
 }

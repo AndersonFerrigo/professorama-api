@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.clearsys.professorama.api.entities.Atividade;
@@ -15,7 +17,7 @@ import com.clearsys.professorama.api.services.AtividadeService;
 public class AtividadeServiceImpl implements AtividadeService{
 
 	private static final Logger log = LoggerFactory.getLogger(AtividadeServiceImpl.class);
-	
+
 	@Autowired
 	private AtividadeRepository atividadeRepository;
 
@@ -34,23 +36,29 @@ public class AtividadeServiceImpl implements AtividadeService{
 	}
 	
 	@Override
-	public Optional<Atividade> buscarPorNivelEscolar(String nivelEscolar){
-		log.info("Buscando uma atividade pelo nivel escolar {}", nivelEscolar);
-		return Optional.ofNullable(atividadeRepository.findByNivelEscolar(nivelEscolar));
+	public Optional<Atividade> buscarPorSerie(String serie){
+		log.info("Buscando uma atividade pela serie {}", serie);
+		return Optional.ofNullable(atividadeRepository.findBySerie(serie));
 		
 	}
 	
-	@Override
-	public Optional<Atividade> buscarPorProfessor(String professor){
-		log.info("Buscando uma atividade pelo professor {}", professor);
-		return Optional.ofNullable(atividadeRepository.findByProfessor(professor));
+	@Cacheable("atividadePorId")
+	public Optional<Atividade> buscarPorId(Long id){
+		log.info("Buscando uma atividade pelo id {}", id);
+		return atividadeRepository.findById(id);
 	}
 	
-	@Override
+	@CachePut("atividadePorId")
 	public Atividade persistir(Atividade atividade) {
 		log.info("Persistindo atividade {} ", atividade);
 		return this.atividadeRepository.save(atividade);
-		
 	}
+
+	@Override
+	public void remover(Long id) {
+		log.info("Removendo atividade {} ", id);
+		this.atividadeRepository.deleteById(id);
+	}
+	
 	
 }

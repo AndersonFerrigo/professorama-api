@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.clearsys.professorama.api.entities.Aluno;
@@ -26,18 +28,37 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
-	public Optional<Aluno> buscarPorRA(String senha) {
-		log.info("Buscando um aluno pelo RA {}", senha);
-		return Optional.ofNullable(alunoRepository.findBySenha(senha)); 
+	public Optional<Aluno> buscarPorSerie(String serie) {
+		log.info("Buscando um aluno pela serie {}", serie);
+		return Optional.ofNullable(alunoRepository.findBySerie(serie)); 
+
+	}
+	
+
+	@Cacheable("alunoPorId")
+	public Optional<Aluno> buscarPorId(Long id) {
+		log.info("Buscando um aluno pelo id {}", id);
+		return alunoRepository.findById(id); 
 
 	}
 
-	
 	@Override
+	public Aluno buscarLogin(String user, String senha) {
+		log.info("Buscando um aluno pelo usuario {} e pela senha {} ", user,senha);
+		return alunoRepository.systemLogin(user, senha);
+	}
+
+	@CachePut("alunoPorId")
 	public Aluno persistir(Aluno aluno) {
 		log.info("Persistindo aluno {}", aluno);
 		return this.alunoRepository.save(aluno);
 	}
 
+	@Override
+	public void remover(Long id) {
+		log.info("Removendo aluno {} ", id);
+		this.alunoRepository.deleteById(id);
+		
+	}
 			
 }

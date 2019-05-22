@@ -7,6 +7,17 @@ import com.clearsys.professorama.api.entities.Atividade;
 public interface AtividadeService {
 
 	/**
+	 * Retorna uma atividade com base em um ID
+	 * 
+	 * @param id
+	 * @return Optional<Atividade>
+	 */
+	
+
+	Optional<Atividade> buscarPorId(Long id);
+	
+
+	/**
 	 * Retorna uma atividade com base na materia
 	 * 
 	 * @param materia
@@ -28,15 +39,8 @@ public interface AtividadeService {
 	 * @param nivelEscolar
 	 * @return Optional<Atividade>
 	 */
-	Optional<Atividade> buscarPorNivelEscolar(String nivelEscolar);
+	Optional<Atividade> buscarPorSerie(String serie);
 	
-	/**
-	 * Retorna uma atividade com base em um professor
-	 * 
-	 * @param professor
-	 * @return Optional<Atividade>
-	 */
-	Optional<Atividade> buscarPorProfessor(String professor);
 	
 	/**
 	 * Cadastra uma nova atividade
@@ -45,4 +49,11 @@ public interface AtividadeService {
 	 * @return Atividade
 	 */
 	Atividade persistir(Atividade atividade);
+	
+	/**
+	 * Remove uma atividade da base de dados.
+	 * 
+	 * @param id
+	 */
+	void remover (Long id);
 }

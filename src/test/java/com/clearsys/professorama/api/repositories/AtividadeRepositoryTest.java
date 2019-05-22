@@ -22,24 +22,20 @@ public class AtividadeRepositoryTest {
 	private AtividadeRepository atividadeRepository;
 
 	private static final String materia = "historia";
-	private static final String anoDestinado = "3";
-	private static final String nivelEscolar = "Ensino medio";
+	private static final String serie = "3 Ensino medio";
 	private static final String dataInicio = "13/05/2019";
 	private static final String dataEntrega = "27/05/2019";
 	private static final String descricao = "Descreva a ascenção do imperio Otomano";
-	private static final String professor = "João";
 	
 	@Before
 	public  void setUp() throws Exception{
 		Atividade atividade = new Atividade();
 		
 		atividade.setMateria(materia);
-		atividade.setAnoDestinado(anoDestinado);
-		atividade.setNivelEscolar(nivelEscolar);
+		atividade.setSerie(serie);
 		atividade.setDataInicio(dataInicio);
 		atividade.setDataEntrega(dataEntrega);
 		atividade.setDescricao(descricao);
-		atividade.setProfessor(professor);
 				
 		this.atividadeRepository.save(atividade);
 	}
@@ -55,13 +51,7 @@ public class AtividadeRepositoryTest {
 		Atividade atividade = this.atividadeRepository.findByMateria(materia);
 		assertEquals(materia,atividade.getMateria());
 	}
-
-	@Test
-	public void buscaPorProfessor() {
-		Atividade atividade = this.atividadeRepository.findByProfessor(professor);
-		assertEquals(professor, atividade.getProfessor());
-	}
-
+	
 	@Test
 	public void buscaPorDataEntrega() {
 		Atividade atividade = this.atividadeRepository.findByDataEntrega(dataEntrega);

@@ -24,18 +24,18 @@ public class AlunoRepositoryTest {
 	
 	
 	private static final String nome = "joao";
+	private static final String serie = "3 Ensino Medio";
 	private static final String user = "joaojoao";
 	private static final String password = "1234";
-	private static final int anoLetivo = 3;
-	private static final String nivelEscolar = "Medio";
+
 	
 	
 	@Before
 	public  void setUp() throws Exception{
 		Aluno aluno = new Aluno();
+	
 		aluno.setNome(nome);
-		aluno.setNivelEscolar(nivelEscolar);
-		aluno.setSerie(anoLetivo);
+		aluno.setSerie(serie);
 		aluno.setUsuario(user);
 		aluno.setSenha(PasswordUtils.gerarBCrypt(password));
 	
@@ -48,22 +48,21 @@ public class AlunoRepositoryTest {
 	}
 	
 	@Test
-	public void testBuscaLogin() {
+	public void testBuscaPorUsuario() {
 		Aluno aluno = this.alunoRepository.findByUsuario(user);
 		assertEquals(user, aluno.getUsuario());
 	}
 	
-	
 	@Test
-	public void findBySerieAndNivelEscolar() {
-		Aluno aluno = this.alunoRepository.findByNivelEscolar(nivelEscolar);
-		assertEquals(nivelEscolar, aluno.getNivelEscolar());
+	public void testBuscaPorSenha() {
+		Aluno aluno = this.alunoRepository.findBySenha(password);
+		assertEquals(password, aluno.getSenha());
 	}
 	
 	@Test
 	public void findBySerie() {
-		Aluno aluno = this.alunoRepository.findBySerie(anoLetivo);
-		assertEquals(anoLetivo, aluno.getSerie());
+		Aluno aluno = this.alunoRepository.findBySerie(serie);
+		assertEquals(serie, aluno.getSerie());
 	}
 
 	

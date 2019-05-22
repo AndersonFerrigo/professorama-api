@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,29 +17,27 @@ import javax.persistence.Table;
 public class Atividade implements Serializable{
 	
 	/**
-	 * 
+	 * Entidade responsável por representar uma atividade no sistema
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	private Long id;
 	private String materia;
-	private String anoDestinado;
-	private String nivelEscolar;
+	private String serie;
 	private String dataInicio;
 	private String dataEntrega;
 	private String descricao;
-	private String professor;
+	private Professor professor;
 	
-	public Atividade() {
-	}
+	public Atividade() {}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -49,24 +50,15 @@ public class Atividade implements Serializable{
 		this.materia = materia;
 	}
 	
-	@Column(name = "ano_destino")
-	public String getAnoDestinado() {
-		return anoDestinado;
+	@Column(name = "serie")
+	public String getSerie() {
+		return serie;
 	}
 	
-	public void setAnoDestinado(String anoDestinado) {
-		this.anoDestinado = anoDestinado;
+	public void setSerie(String serie) {
+		this.serie = serie;
 	}
-	
-	@Column(name = "nivel_escolar", nullable = false)
-	public String getNivelEscolar() {
-		return nivelEscolar;
-	}
-	
-	public void setNivelEscolar(String nivelEscolar) {
-		this.nivelEscolar = nivelEscolar;
-	}
-	
+		
 	@Column(name = "data_inicio", nullable = false)
 	public String getDataInicio() {
 		return dataInicio;
@@ -94,21 +86,22 @@ public class Atividade implements Serializable{
 		this.descricao = descricao;
 	}
 
-	@Column(name = "professor", nullable = false)
-	public String getProfessor() {
+	@ManyToOne( fetch = FetchType.LAZY )
+	public Professor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(String professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 
 	@Override
 	public String toString() {
-		return "Atividade [id=" + id + ", materia=" + materia + ", anoDestinado=" + anoDestinado + ", nivelEscolar="
-				+ nivelEscolar + ", data_inicio=" + dataInicio + ", data_entrega=" + dataEntrega + ", descricao="
-				+ descricao + ", professor=" + professor + "]";
+		return "Atividade [id=" + id + ", materia=" + materia + ", serie=" + serie + ", dataInicio=" + dataInicio
+				+ ", dataEntrega=" + dataEntrega + ", descricao=" + descricao + ", professor=" + professor + "]";
 	}
+
+
 	
 	
 }

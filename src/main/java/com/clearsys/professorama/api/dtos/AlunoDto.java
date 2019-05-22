@@ -4,17 +4,15 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-public class CadastroAlunoDto {
+public class AlunoDto {
 
 	private long id;
-	private String nivelEscolar;
 	private String nome;
+	private String serie;
 	private String senha;
-	private int serie;
 	private String usuario;
 	
-	public CadastroAlunoDto() {
-	}
+	public AlunoDto() { }
 
 	public long getId() {
 		return id;
@@ -25,7 +23,7 @@ public class CadastroAlunoDto {
 	}
 
 	@NotNull(message = "O campo nome não pode ser vazio")
-	@Length(min = 3, max = 200, message = "Nome deve conter entre 2 e 200 caracteres." )
+	@Length(min = 1, max = 200, message = "Nome deve conter entre 1 e 200 caracteres." )
 	public String getNome() {
 		return nome;
 	}
@@ -35,6 +33,7 @@ public class CadastroAlunoDto {
 	}
 
 	@NotNull(message = "O campo usuário não pode ser vazio")
+	@Length(min = 1, max = 100, message = "Nome deve conter entre 1 e 100 caracteres." )
 	public String getUsuario() {
 		return usuario;
 	}
@@ -43,7 +42,8 @@ public class CadastroAlunoDto {
 		this.usuario = usuario;
 	}
 
-	@NotNull(message = "O campo RA não pode ser vazio")
+	@NotNull(message = "O campo senha não pode ser vazio")
+	@Length(min = 1, max = 100, message = "Nome deve conter entre 1 e 100 caracteres." )
 	public String getSenha() {
 		return senha;
 	}
@@ -51,31 +51,21 @@ public class CadastroAlunoDto {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-	@NotNull(message = "O campo nível escolar não pode ser vazio")
-	public String getNivelEscolar() {
-		return nivelEscolar;
-	}
-
-	public void setNivelEscolar(String nivelEscolar) {
-		this.nivelEscolar = nivelEscolar;
-	}
-	
+		
 	@NotNull(message = "O campo série não pode ser vazio")
-	public int getSerie() {
+	@Length(min = 1, max = 20, message = "Nome deve conter entre 1 e 20 caracteres." )
+	public String getSerie() {
 		return serie;
 	}
 
-	public void setSerie(int serie) {
+	public void setSerie(String serie) {
 		this.serie = serie;
 	}
 
 	@Override
 	public String toString() {
-		return "CadastroAlunoDto [id=" + id + ", nivelEscolar=" + nivelEscolar + ", nome=" + nome + ", senha=" + senha
-				+ ", serie=" + serie + ", usuario=" + usuario + "]";
+		return "CadastroAlunoDto [id=" + id + ", nome=" + nome + ", serie=" + serie + ", senha=" + senha + ", usuario="
+				+ usuario + "]";
 	}
-
-	
 	
 }

@@ -14,19 +14,17 @@ import javax.persistence.Table;
 public class Aluno implements Serializable{
 	
 	/**
-	 * 
+	 * Entidade responsável por representar um Aluno no sistema
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	private long id;
-	private int serie;
 	private String nome;
+	private String serie;
 	private String usuario;
 	private String senha;
-	private String nivelEscolar;
 	
-	public Aluno() {
-	}
+	public Aluno() {}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -48,21 +46,12 @@ public class Aluno implements Serializable{
 	}
 
 	@Column(name="serie", nullable = false)
-	public int getSerie() {
+	public String getSerie() {
 		return serie;
 	}
 	
-	public void setSerie(int serie) {
+	public void setSerie(String serie) {
 		this.serie = serie;
-	}
-	
-	@Column(name="nivel_escolar", nullable = false)
-	public String getNivelEscolar() {
-		return nivelEscolar;
-	}
-	
-	public void setNivelEscolar(String nivelEscolar) {
-		this.nivelEscolar = nivelEscolar;
 	}
 	
 	@Column(name="usuario", nullable = false)
@@ -82,10 +71,12 @@ public class Aluno implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", serie=" + serie + ", nome=" + nome + ", usuario=" + usuario + ", senha=" + senha
-				+ ", nivelEscolar=" + nivelEscolar + "]";
+		return "Aluno [id=" + id + ", nome=" + nome + ", serie=" + serie + ", usuario=" + usuario + ", senha=" + senha
+				+ "]";
 	}
+	
+	
 }

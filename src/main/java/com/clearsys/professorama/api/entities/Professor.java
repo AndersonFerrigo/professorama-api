@@ -14,20 +14,18 @@ import javax.persistence.Table;
 public class Professor implements Serializable{
 	
 	/**
-	 * 
+	 * Entidade responsável por representar um professor no sistema 
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String nome;
+	private String materia;
 	private String usuario;
 	private String senha;
 	
 	
-	
-	public Professor() {
-
-	}
+	public Professor() {}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -48,6 +46,15 @@ public class Professor implements Serializable{
 		this.nome = nome;
 	}
 	
+	@Column(name="professor_materia", nullable = false)
+	public String getMateria() {
+		return materia;
+	}
+
+	public void setMateria(String materia) {
+		this.materia = materia;
+	}
+
 	@Column(name = "professor_usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
@@ -68,8 +75,8 @@ public class Professor implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Professor [id=" + id + ", nome=" + nome + ", usuario=" + usuario + ", senha=" + senha + "]";
+		return "Professor [id=" + id + ", nome=" + nome + ", materia=" + materia + ", usuario=" + usuario + ", senha="
+				+ senha + "]";
 	}
-	
 	
 }
