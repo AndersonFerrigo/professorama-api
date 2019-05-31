@@ -2,6 +2,7 @@ CREATE TABLE `aluno`(
 	`id` int not null PRIMARY KEY AUTO_INCREMENT,
 	`nome` varchar(60) not null,
 	`serie` varchar(20) not null,
+	`perfil` varchar(20) not null,
 	`usuario` varchar(50) not null,
 	`senha` varchar(500) not null
 );
@@ -9,6 +10,7 @@ CREATE TABLE `aluno`(
 CREATE TABLE `professor`(
 	`id` int not null PRIMARY KEY AUTO_INCREMENT,
 	`nome` varchar(60) not null,
+	`perfil` varchar(20) not null,
 	`materia` varchar(60) not null,
 	`usuario` varchar(50) not null,
 	`senha` varchar(50) not null

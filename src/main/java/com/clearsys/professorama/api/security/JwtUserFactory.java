@@ -23,19 +23,14 @@ public class JwtUserFactory {
 	 * @param funcionario
 	 * @return JwtUser
 	 */
-	public static JwtUser create(Aluno aluno) {
+	public static JwtUser createAluno(Aluno aluno) {
 		return new JwtUser(aluno.getId(), aluno.getUsuario(), aluno.getSenha(),
 				mapToGrantedAuthorities(aluno.getPerfil()));
 	}
 	
-	/**
-	 * Converte e gera um JwtUser com base nos dados de um professor.
-	 * 
-	 * @param funcionario
-	 * @return JwtUser
-	 */
-	public static JwtUser create(Professor professor) {
-		return new JwtUser(professor.getId(), professor.getUsuario(), professor.getSenha(),
+	
+	public static JwtUser createProfessor(Professor professor) {
+		return new JwtUser(professor.getId(), professor.getUsuario(),professor.getSenha(),
 				mapToGrantedAuthorities(professor.getPerfil()));
 	}
 

@@ -10,6 +10,7 @@ import com.clearsys.professorama.api.entities.Atividade;
 @Transactional(readOnly = true)
 public interface AtividadeRepository extends JpaRepository<Atividade, Long>  {
 	
+	@Override
 	Optional<Atividade> findById(Long id);
 	Atividade findByMateria(String materia);
 	Atividade findByDataEntrega(String dataEntrega);

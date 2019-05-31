@@ -1,4 +1,4 @@
-package com.clearsys.professorama.api.security;
+package com.clearsys.professorama.api.security.controller;
 
 import java.util.Optional;
 
@@ -17,20 +17,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.clearsys.professorama.api.response.Response;
 import com.clearsys.professorama.api.security.dto.JwtAuthenticationDto;
 import com.clearsys.professorama.api.security.dto.TokenDto;
 import com.clearsys.professorama.api.security.utils.JwtTokenUtil;
 
+@RestController
+@RequestMapping("/auth")
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 	private static final String TOKEN_HEADER = "Authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
 
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -48,6 +55,7 @@ public class AuthenticationController {
 	 * @return ResponseEntity<Response<TokenDto>>
 	 * @throws AuthenticationException
 	 */
+	
 	@PostMapping
 	public ResponseEntity<Response<TokenDto>> gerarTokenJwt(
 			@Valid @RequestBody JwtAuthenticationDto authenticationDto, BindingResult result)
@@ -55,7 +63,7 @@ public class AuthenticationController {
 		Response<TokenDto> response = new Response<TokenDto>();
 
 		if (result.hasErrors()) {
-			log.error("Erro validando lançamento: {}", result.getAllErrors());
+			log.error("Erro validando usuario: {}", result.getAllErrors());
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
@@ -72,12 +80,14 @@ public class AuthenticationController {
 		return ResponseEntity.ok(response);
 	}
 
+	
 	/**
 	 * Gera um novo token com uma nova data de expiração.
 	 * 
 	 * @param request
 	 * @return ResponseEntity<Response<TokenDto>>
 	 */
+	
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<Response<TokenDto>> gerarRefreshTokenJwt(HttpServletRequest request) {
 		log.info("Gerando refresh token JWT.");
@@ -86,21 +96,24 @@ public class AuthenticationController {
 		
 		if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)) {
 			token = Optional.of(token.get().substring(7));
-        }
-		
-		if (!token.isPresent()) {
-			response.getErrors().add("Token não informado.");
-		} else if (!jwtTokenUtil.tokenValido(token.get())) {
+        
+		}
+			if (!token.isPresent()) {
+				response.getErrors().add("Token não informado.");
+			
+			} else if (!jwtTokenUtil.tokenValido(token.get())) {
 			response.getErrors().add("Token inválido ou expirado.");
-		}
+			
+				}
 		
-		if (!response.getErrors().isEmpty()) { 
-			return ResponseEntity.badRequest().body(response);
-		}
-		
+			if (!response.getErrors().isEmpty()) { 
+				return ResponseEntity.badRequest().body(response);
+			}
+			
 		String refreshedToken = jwtTokenUtil.refreshToken(token.get());
 		response.setData(new TokenDto(refreshedToken));
 		return ResponseEntity.ok(response);
-	}
+	
+		}
 
 }

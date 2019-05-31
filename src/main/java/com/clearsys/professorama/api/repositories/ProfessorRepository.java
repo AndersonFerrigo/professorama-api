@@ -9,6 +9,7 @@ import com.clearsys.professorama.api.entities.Professor;
 
 @Transactional(readOnly = true)
 public interface ProfessorRepository extends JpaRepository<Professor, Long>{
+	@Override
 	Optional<Professor> findById(Long id);
 	Professor findByNome(String nome);
 	Professor findByMateria(String materia);

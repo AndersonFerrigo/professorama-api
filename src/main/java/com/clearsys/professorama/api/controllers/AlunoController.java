@@ -42,6 +42,7 @@ public class AlunoController {
 		
 	}
 	
+	/*
 	@PostMapping
 	public ResponseEntity<Response<AlunoDto>> cadastrar (@Valid @RequestBody AlunoDto alunoDto, 
 			BindingResult result )throws NoSuchAlgorithmException{
@@ -67,6 +68,7 @@ public class AlunoController {
 		
 	}
 
+*/
 	/**
 	 * Busca um aluno pelo id
 	 * 
@@ -91,7 +93,7 @@ public class AlunoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
+/*	
 	@GetMapping(value = "/{usuario}/{senha}")
 	public ResponseEntity<Response<AlunoDto>> buscarLogin(@PathVariable("user") String usuario, @PathVariable("senha") String senha){
 		LOG.info("Buscando aluno pelo usuario {} e senha {}", usuario,senha);
@@ -110,7 +112,7 @@ public class AlunoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
+	*/
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Response<AlunoDto>> atualizar(@PathVariable("id") Long id,
 				@Valid @RequestBody AlunoDto alunoDto, BindingResult result ) throws ParseException, NoSuchAlgorithmException{

@@ -36,7 +36,7 @@ public interface AlunoService {
 	 * @return Optional<Aluno>
 	 * 
 	 */
-	Aluno buscarLogin(String user, String senha);
+	//Aluno buscarLogin(String user, String senha);
 	
 	/**
 	 * Retorna um RA de determinado aluno

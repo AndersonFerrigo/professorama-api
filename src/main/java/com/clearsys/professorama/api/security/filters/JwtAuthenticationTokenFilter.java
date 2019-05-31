@@ -32,6 +32,7 @@ public class JwtAuthenticationTokenFilter  extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
+
 		String token = request.getHeader(AUTH_HEADER);
         if (token != null && token.startsWith(BEARER_PREFIX)) {
         	token = token.substring(7);
@@ -49,7 +50,11 @@ public class JwtAuthenticationTokenFilter  extends OncePerRequestFilter{
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+        
+        chain.doFilter(request, response);
+
 	}
 }
 	
 
+	

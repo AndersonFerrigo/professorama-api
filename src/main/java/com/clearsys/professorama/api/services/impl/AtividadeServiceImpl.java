@@ -42,12 +42,14 @@ public class AtividadeServiceImpl implements AtividadeService{
 		
 	}
 	
+	@Override
 	@Cacheable("atividadePorId")
 	public Optional<Atividade> buscarPorId(Long id){
 		log.info("Buscando uma atividade pelo id {}", id);
 		return atividadeRepository.findById(id);
 	}
 	
+	@Override
 	@CachePut("atividadePorId")
 	public Atividade persistir(Atividade atividade) {
 		log.info("Persistindo atividade {} ", atividade);
