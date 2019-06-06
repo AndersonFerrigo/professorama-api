@@ -20,7 +20,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 	
 	@Override
 	Optional<Aluno> findById(Long id);
-	//Aluno systemLogin(@Param ("usuario") String usuario, @Param("senha") String senha);
+	Optional<Aluno> findByUsuarioAndSenha(String user, String password);
 	Aluno findByUsuario(String user); 
 	Aluno findBySenha(String password);
 	Aluno findBySerie(String serie);

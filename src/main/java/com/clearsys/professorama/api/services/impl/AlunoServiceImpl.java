@@ -43,13 +43,13 @@ public class AlunoServiceImpl implements AlunoService{
 
 	}
 
-	/*
+	
 	@Override
-	public Aluno buscarLogin(String user, String senha) {
+	public Optional<Aluno> buscarLogin(String user, String senha) {
 		log.info("Buscando um aluno pelo usuario {} e pela senha {} ", user,senha);
-		return alunoRepository.systemLogin(user, senha);
+		return alunoRepository.findByUsuarioAndSenha(user, senha);
 	}
-*/
+
 	@Override
 	@CachePut("alunoPorId")
 	public Aluno persistir(Aluno aluno) {

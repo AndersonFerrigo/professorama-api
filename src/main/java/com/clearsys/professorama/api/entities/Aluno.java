@@ -4,14 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.clearsys.professorama.api.enums.PerfilEnum;
 
 @Entity
 @Table(name = "aluno") 
@@ -27,7 +23,7 @@ public class Aluno implements Serializable{
 	private String serie;
 	private String usuario;
 	private String senha;
-	private PerfilEnum perfil;
+	private String perfil;
 	
 	public Aluno() {}
 	
@@ -69,13 +65,12 @@ public class Aluno implements Serializable{
 	}
 	
 	
-	@Enumerated(EnumType.STRING)
 	@Column(name = "perfil", nullable = false)
-	public PerfilEnum getPerfil() {
+	public String getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(PerfilEnum perfil) {
+	public void setPerfil(String perfil) {
 		this.perfil = perfil;
 	}
 

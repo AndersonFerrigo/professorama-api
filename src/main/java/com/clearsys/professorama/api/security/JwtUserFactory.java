@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.entities.Professor;
-import com.clearsys.professorama.api.enums.PerfilEnum;
 
 public class JwtUserFactory {
 
@@ -37,12 +36,12 @@ public class JwtUserFactory {
 	/**
 	 * Converte o perfil do usuário para o formato utilizado pelo Spring Security.
 	 * 
-	 * @param perfilEnum
+	 * @param string
 	 * @return List<GrantedAuthority>
 	 */
-	private static List<GrantedAuthority> mapToGrantedAuthorities(PerfilEnum perfilEnum) {
+	private static List<GrantedAuthority> mapToGrantedAuthorities(String string) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(perfilEnum.toString()));
+		authorities.add(new SimpleGrantedAuthority(string.toString()));
 		return authorities;
 	}
 

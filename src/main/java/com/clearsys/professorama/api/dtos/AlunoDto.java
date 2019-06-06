@@ -9,6 +9,7 @@ public class AlunoDto {
 	private long id;
 	private String nome;
 	private String serie;
+	private String perfil; 
 	private String senha;
 	private String usuario;
 	
@@ -30,6 +31,16 @@ public class AlunoDto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	@NotNull(message = "O campo usuário não pode ser vazio")
+	@Length(min = 1, max = 100, message = "Nome deve conter entre 1 e 100 caracteres." )
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	@NotNull(message = "O campo usuário não pode ser vazio")

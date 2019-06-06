@@ -15,8 +15,12 @@ import com.clearsys.professorama.api.services.AlunoService;
 import com.clearsys.professorama.api.services.ProfessorService;
 
 @Service
-public class JwtUserDetailsServiceImpl implements UserDetailsService {
+public abstract class JwtUserDetailsServiceImpl implements UserDetailsService {
 
+public JwtUserDetailsServiceImpl() {
+	super();
+}
+	
 	@Autowired
 	private AlunoService alunoService;
 	
@@ -24,9 +28,8 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 	private ProfessorService professorService;
 	
 	
-	@Override
-	public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
-		Optional<Aluno> aluno = alunoService.buscarPorUsuario(user);
+	public UserDetails loadUserByUsername(String user, String senha) throws UsernameNotFoundException {
+		Optional<Aluno> aluno = alunoService.buscarLogin(user, senha);
 		Optional<Professor> professor = professorService.buscarPorUsuario(user);
 		
 		if(aluno.isPresent()) {

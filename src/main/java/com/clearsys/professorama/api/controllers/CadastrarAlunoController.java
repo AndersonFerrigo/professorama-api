@@ -74,6 +74,7 @@ public class CadastrarAlunoController {
 		aluno.setId(alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
 		aluno.setSerie(alunoDto.getSerie());
+		aluno.setPerfil(alunoDto.getPerfil());
 		aluno.setUsuario(alunoDto.getUsuario());
 		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
 		return aluno;
@@ -86,6 +87,7 @@ public class CadastrarAlunoController {
 		alunoDto.setId(aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
+		alunoDto.setPerfil(aluno.getPerfil());
 		alunoDto.setUsuario(aluno.getUsuario());
 		alunoDto.setSenha(aluno.getSenha());
 		
