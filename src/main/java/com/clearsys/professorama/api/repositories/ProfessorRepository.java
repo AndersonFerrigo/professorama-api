@@ -11,6 +11,7 @@ import com.clearsys.professorama.api.entities.Professor;
 public interface ProfessorRepository extends JpaRepository<Professor, Long>{
 	@Override
 	Optional<Professor> findById(Long id);
+	Optional<Professor> findByUsuarioAndSenha(String usuario, String senha);
 	Professor findByNome(String nome);
 	Professor findByMateria(String materia);
 	Professor findByUsuario(String usuario);

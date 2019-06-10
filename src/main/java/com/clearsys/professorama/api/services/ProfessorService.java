@@ -14,6 +14,13 @@ public interface ProfessorService {
 	 */
 	Optional<Professor> buscarPorId(Long id);
 	
+	/*
+	 * 
+	 * @Param String usuario, String senha
+	 * @return login
+	 */
+	Optional<Professor> buscalogin(String usuario, String senha);
+	
 	/**
 	 * Retorna um professor com base no nome
 	 *  

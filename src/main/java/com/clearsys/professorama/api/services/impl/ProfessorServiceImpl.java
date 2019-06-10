@@ -47,5 +47,12 @@ public class ProfessorServiceImpl implements ProfessorService {
 		log.info("Buscando um professor pelo id {} ", id);
 		return professorRepository.findById(id);
 	}
+
+
+	@Override
+	public Optional<Professor> buscalogin(String usuario, String senha) {
+		log.info("Logando professor pelo usuario {}  e senha {} ", usuario, senha);		
+		return professorRepository.findByUsuarioAndSenha(usuario, senha);
+	}
 	
 }

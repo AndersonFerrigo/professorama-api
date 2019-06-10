@@ -22,12 +22,12 @@ public class JwtUser implements UserDetails{
 	}
 	
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 
@@ -49,12 +49,12 @@ public class JwtUser implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+		return this.authorities;
 	}
 
 	
