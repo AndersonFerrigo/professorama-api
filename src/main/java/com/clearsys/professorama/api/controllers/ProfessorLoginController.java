@@ -43,7 +43,7 @@ public class ProfessorLoginController {
 	public ResponseEntity<Response<JwtAuthenticationDto>> logarProfessor (@Valid @RequestBody JwtAuthenticationDto authenticationDto, 
 			BindingResult result )throws NoSuchAlgorithmException{
 			
-		LOG.info("Logando Aluno {}", authenticationDto.toString());
+		LOG.info("Logando Professor {}", authenticationDto.toString());
 		Response<JwtAuthenticationDto> response = new Response<JwtAuthenticationDto>();
 		
 		Professor professor = this.converterDtoParaProfessor(authenticationDto, result);

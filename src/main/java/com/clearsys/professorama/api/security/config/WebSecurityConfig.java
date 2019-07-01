@@ -65,14 +65,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().authorizeRequests()
-		.antMatchers("/api/cadastrar-aluno").permitAll()
-		.antMatchers("/auth/**",
-					 "/api/aluno",
-					 "/api/atividade",
-					 "/v2/api-docs",
-					 "/configuration/security", 
-					 "/webjars/**")
-				.permitAll().anyRequest().authenticated();
+		.antMatchers("/api/cadastrar-aluno", "/api/login-aluno","/api/aluno", "/api/login-professor").permitAll();
+		
+		//.antMatchers("/auth/**",
+					 
+			//		 "/api/atividade",
+				//	 "/v2/api-docs",
+					// "/configuration/security", 
+					// "/webjars/**")
+			//	.permitAll().anyRequest().authenticated();
 				httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 				httpSecurity.headers().cacheControl();
 	}

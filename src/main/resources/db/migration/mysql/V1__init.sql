@@ -22,8 +22,6 @@ CREATE TABLE `atividade`(
 	`serie` varchar(60) not null,
 	`data_inicio` varchar(20) not null,
 	`data_entrega` varchar(20) not null,
-	`descricao` text not null,
-	`professor_id` int not null,
-	 CONSTRAINT `professor_id` foreign key (`professor_id`) references `professor`(`id`)
+	`descricao` text not null
 	
 ); 

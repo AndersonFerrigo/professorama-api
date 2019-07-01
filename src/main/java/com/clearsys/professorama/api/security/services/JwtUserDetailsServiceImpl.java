@@ -8,9 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.entities.Professor;
-import com.clearsys.professorama.api.security.JwtUserFactory;
 import com.clearsys.professorama.api.services.AlunoService;
 import com.clearsys.professorama.api.services.ProfessorService;
 
@@ -29,15 +27,15 @@ public JwtUserDetailsServiceImpl() {
 	
 	
 	public UserDetails loadUserByUsername(String user, String senha) throws UsernameNotFoundException {
-		Optional<Aluno> aluno = alunoService.buscarLogin(user, senha);
+		//Aluno aluno = alunoService.buscarLogin(user, senha);
 		Optional<Professor> professor = professorService.buscarPorUsuario(user);
-		
+		/*
 		if(aluno.isPresent()) {
 			return JwtUserFactory.createAluno(aluno.get());
 		}else if(professor.isPresent()) {
 			return JwtUserFactory.createProfessor(professor.get());
 		}
-		
+		*/
 		throw new UsernameNotFoundException("Usuario ou senha errados");
 		
 	}

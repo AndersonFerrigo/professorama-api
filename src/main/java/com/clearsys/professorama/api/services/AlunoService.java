@@ -16,7 +16,7 @@ public interface AlunoService {
 	 * @return Optional<Aluno> 
 	 */
 	
-	Optional<Aluno> buscarPorId(Long id); 
+	Optional<Aluno> buscarPorId(int id); 
 	
 	/**
 	 * Retorna um Usuario de determinado aluno
@@ -31,12 +31,12 @@ public interface AlunoService {
 	/**
 	 * Busca uma aluno cadastrado no sistema 
 	 * 
-	 * @param user
+	 * @param usuario
 	 * @param senha
 	 * @return Optional<Aluno>
 	 * 
 	 */
-	Optional<Aluno> buscarLogin(String user, String senha);
+	Optional<Aluno> buscarLogin(String usuario, String senha);
 	
 	/**
 	 * Retorna um RA de determinado aluno
@@ -64,5 +64,5 @@ public interface AlunoService {
 	 * @param id
 	 */
 
-	void remover(Long id);
+	void remover(int id);
 }

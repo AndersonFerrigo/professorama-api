@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clearsys.professorama.api.dtos.AlunoDto;
@@ -37,12 +39,9 @@ public class AlunoController {
 	@Autowired
 	private AlunoService alunoService;
 
-	public AlunoController() {
+	public AlunoController(){}
 		
-	}
-	
-	/*
-	@PostMapping
+	@PostMapping 
 	public ResponseEntity<Response<AlunoDto>> cadastrar (@Valid @RequestBody AlunoDto alunoDto, 
 			BindingResult result )throws NoSuchAlgorithmException{
 			
@@ -56,24 +55,43 @@ public class AlunoController {
 			LOG.error("Erro validando dados cadastro de Aluno: {}", result.getAllErrors());
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
-			
 		}
-	
 		this.alunoService.persistir(aluno);
 		
 		response.setData(this.converterCadastroAlunoDto(aluno));
 		return ResponseEntity.ok(response);
-		
-		
 	}
 
-*/
+	@GetMapping(value="/usuario/{usuario}/senha/{senha}") 
+	public ResponseEntity<Response<AlunoDto>> logar (@Valid @RequestBody AlunoDto alunoDto, 
+			BindingResult result )throws NoSuchAlgorithmException{
+			
+		LOG.info("Logando Aluno {}", alunoDto.toString());
+		Response<AlunoDto> response = new Response<AlunoDto>();
+		
+	//	validarDadosExixtentes(alunoDto, result );
+		Aluno aluno = this.converterDtoParaAluno(alunoDto, result);
+		
+		if(result.hasErrors()) {
+			LOG.error("Erro validando dados cadastro de Aluno: {}", result.getAllErrors());
+			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
+		this.alunoService.buscarLogin(alunoDto.getUsuario(),alunoDto.getSenha());
+		
+		response.setData(this.converterCadastroAlunoDto(aluno));
+		return ResponseEntity.ok(response);
+	}
+
+
 	/**
 	 * Busca um aluno pelo id
 	 * 
 	 * @param id
 	 * @return
 	 */
+	
+/*
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Response<AlunoDto>> listarPorId(@PathVariable("id") Long id){
 		LOG.info("Buscando aluno pelo id {}", id);
@@ -92,33 +110,60 @@ public class AlunoController {
 		return ResponseEntity.ok(response);
 	}
 	
-/*	
-	@GetMapping(value = "/{usuario}/{senha}")
-	public ResponseEntity<Response<AlunoDto>> buscarLogin(@PathVariable("user") String usuario, @PathVariable("senha") String senha){
+	*/
+	
+	
+	
+	
+	@GetMapping("/{usuario}")
+	public ResponseEntity<Response<AlunoDto>> buscarPorUsuario(@PathVariable("usuario") String usuario){
+		LOG.info("Buscando aluno pelo usuario {}", usuario);
+		Response<AlunoDto> response = new Response<AlunoDto>();
+		Optional<Aluno> aluno = this.alunoService.buscarPorUsuario(usuario);
+	
+		if(!aluno.isPresent()) {
+			LOG.info("Aluno não encontrado para o usuario {}", usuario);
+			response.getErrors().add("Aluno não encontrado para o usuario " + usuario );
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		LOG.info("Buscando aluno pelo usuario  {} antes de chamar o metodo ", usuario);
+		
+		response.setData(this.converterCadastroAlunoDto(aluno.get()));
+		return ResponseEntity.ok(response);
+	}
+
+	
+	
+	
+	@PostMapping(value="/usuario/{usuario}/senha/{senha}")
+	public ResponseEntity<Response<AlunoDto>>buscarLogin(@PathVariable("usuario") String usuario,
+																		@PathVariable("senha") String senha){
 		LOG.info("Buscando aluno pelo usuario {} e senha {}", usuario,senha);
 		Response<AlunoDto> response = new Response<AlunoDto>();
-		Aluno aluno = this.alunoService.buscarLogin(usuario, senha);
+
+		Optional<Aluno> aluno = this.alunoService.buscarLogin(usuario, senha);
 	
-		if(!aluno.equals(null)) {
+		if(!aluno.isPresent()) {
 			LOG.info("Aluno não encontrado para o usuario {} e senha",usuario, senha);
 			response.getErrors().add("Aluno não encontrado para o usuario =  " + usuario + " e senha = " + senha );
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		LOG.info("Buscando aluno pelo usuario {} e senha {} antes de chamar o metodo ", usuario, senha);
 		
-		response.setData(this.converterCadastroAlunoDto(aluno));
+		LOG.info("Buscando aluno pelo usuario {} e senha {} antes de chamar o metodo  converter ", usuario, senha);
+		
+		response.setData(this.converterCadastroAlunoDto(aluno.get()));
 		return ResponseEntity.ok(response);
 	}
 	
-	*/
+	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Response<AlunoDto>> atualizar(@PathVariable("id") Long id,
+	public ResponseEntity<Response<AlunoDto>> atualizar(@PathVariable("id") int id,
 				@Valid @RequestBody AlunoDto alunoDto, BindingResult result ) throws ParseException, NoSuchAlgorithmException{
 		
 		LOG.info("Atualizando aluno {}", alunoDto.toString() );
 		Response<AlunoDto> response = new Response<AlunoDto>();
-		validarAluno(alunoDto, result);
 	
 		Aluno aluno = this.converterDtoParaAluno(alunoDto, result);
 		
@@ -140,7 +185,7 @@ public class AlunoController {
 	
 	
 	@DeleteMapping(value= "/{id}")
-	public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id){
+	public ResponseEntity<Response<String>> remover(@PathVariable("id") int id){
 		LOG.info("Removendo aluno {}", id);
 		
 		Response<String> response = new Response<String>();
@@ -173,26 +218,6 @@ public class AlunoController {
 		
 	}
 
-	
-	private void validarAluno(@Valid AlunoDto alunoDto, BindingResult result) {
-		if (alunoDto.getId()== 0 ) {
-			result.addError(new ObjectError("aluno", "aluno não informado."));
-			return;
-		}
-
-		LOG.info("Validando aluno id {}: ", alunoDto.getId());
-		
-		Optional<Aluno> aluno = this.alunoService.buscarPorId(alunoDto.getId());
-		
-		if (!aluno.isPresent()) {
-			result.addError(new ObjectError("aluno", "Aluno não encontrado. ID inexistente."));
-		}
-		
-	}
-		
-	
-
-	
 	/**
 	 * Converte os dados de DTO para Aluno 
 	 * 
@@ -205,9 +230,10 @@ public class AlunoController {
 			throws NoSuchAlgorithmException{
 		
 		Aluno aluno = new Aluno();
-		aluno.setId(alunoDto.getId());
+		aluno.setId((int) alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
 		aluno.setSerie(alunoDto.getSerie());
+		aluno.setPerfil(alunoDto.getPerfil());
 		aluno.setUsuario(alunoDto.getUsuario());
 		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
 		return aluno;
@@ -217,9 +243,10 @@ public class AlunoController {
 	
 		AlunoDto alunoDto = new AlunoDto();
 		
-		alunoDto.setId(aluno.getId());
+		alunoDto.setId((int) aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
+		alunoDto.setPerfil(aluno.getPerfil());
 		alunoDto.setUsuario(aluno.getUsuario());
 		alunoDto.setSenha(aluno.getSenha());
 		

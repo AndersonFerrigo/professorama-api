@@ -1,23 +1,25 @@
 package com.clearsys.professorama.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
-
-import javax.validation.Valid;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.clearsys.professorama.api.dtos.AlunoDto;
 import com.clearsys.professorama.api.entities.Aluno;
-import com.clearsys.professorama.api.response.Response;
-import com.clearsys.professorama.api.security.dto.JwtAuthenticationDto;
 import com.clearsys.professorama.api.services.AlunoService;
 import com.clearsys.professorama.api.utils.PasswordUtils;
 
@@ -25,56 +27,73 @@ import com.clearsys.professorama.api.utils.PasswordUtils;
 @RequestMapping("/api/login-aluno")
 @CrossOrigin(origins ="*")
 public class AlunoLoginController {
-
+		 
 	private static final  Logger LOG =LoggerFactory.getLogger(AlunoLoginController.class );
 	
 	@Autowired
 	private AlunoService alunoService;
 	
-	public AlunoLoginController(){
-	}
+	public AlunoLoginController(){}
 	
-	@PostMapping
-	public ResponseEntity<Response<JwtAuthenticationDto>> logarAluno (@Valid @RequestBody JwtAuthenticationDto authenticationDto, 
-			BindingResult result )throws NoSuchAlgorithmException{
+	@RequestMapping(value="/login/usuario/{usuario}/senha/{senha}" ,method=RequestMethod.GET )
+	public ResponseEntity<Aluno>logarAluno (@PathVariable ("usuario") String usuario, 
+							@PathVariable ("senha") String senha) throws NoSuchAlgorithmException{ 
 			
-		LOG.info("Logando Aluno {}", authenticationDto.toString());
-		Response<JwtAuthenticationDto> response = new Response<JwtAuthenticationDto>();
+		LOG.info("Buscando aluno pelo usuario {} e pela senha {} ", usuario, senha);
 		
-		Aluno aluno = this.converterDtoParaAluno(authenticationDto, result);
+		Optional<Aluno> aluno = this.alunoService.buscarLogin(usuario, senha);
+	
+		LOG.info("Validando dados login de Aluno: {}", aluno);
 		
-		if(result.hasErrors()) {
-			LOG.error("Erro validando dados cadastro de Aluno: {}", result.getAllErrors());
-			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-			return ResponseEntity.badRequest().body(response);
-			
+		if(!aluno.isPresent()){
+			LOG.error("Erro validando dados login de Aluno: {}", aluno);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 		}
-	
-		this.alunoService.buscarLogin(authenticationDto.getUsuario(),authenticationDto.getSenha());
 		
-		response.setData(this.converterCadastroAlunoDto(aluno));
+		return ResponseEntity.ok(aluno.get());
+	}
 	
-		return ResponseEntity.ok(response);
+	@GetMapping("/{usuario}")
+	public ResponseEntity<Aluno>buscarPorUsuario(@PathVariable("usuario") String usuario){
+		LOG.info("Buscando aluno pelo usuario {}", usuario);
+		
+		Optional<Aluno> aluno = this.alunoService.buscarPorUsuario(usuario);
+	
+		if(!aluno.isPresent()) {
+			LOG.info("Aluno não encontrado para o usuario {}", usuario);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		LOG.info("Buscando aluno pelo usuario  {} antes de chamar o metodo ", usuario);
+		
+		return ResponseEntity.ok(aluno.get());
 	}
 
-
-	private Aluno converterDtoParaAluno(JwtAuthenticationDto authenticationDto, BindingResult result)
+	
+	private Aluno converterDtoParaAluno(AlunoDto alunoDto, BindingResult result)
 			throws NoSuchAlgorithmException{
 		
 		Aluno aluno = new Aluno();
-		aluno.setUsuario(authenticationDto.getUsuario());
-		aluno.setSenha(PasswordUtils.gerarBCrypt(authenticationDto.getSenha()));
+		aluno.setId((int) alunoDto.getId());
+		aluno.setNome(alunoDto.getNome());
+		aluno.setSerie(alunoDto.getSerie());
+		aluno.setPerfil(alunoDto.getPerfil());
+		aluno.setUsuario(alunoDto.getUsuario());
+		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
 		return aluno;
 	}
 	
-	private JwtAuthenticationDto converterCadastroAlunoDto(Aluno aluno) {
+	private AlunoDto converterCadastroAlunoDto(Aluno aluno) {
 	
-		JwtAuthenticationDto authenticationDto = new JwtAuthenticationDto();
-		authenticationDto.setUsuario(aluno.getUsuario());
-		authenticationDto.setSenha(aluno.getSenha());
+		AlunoDto alunoDto = new AlunoDto();
 		
-		return authenticationDto;
+		alunoDto.setId((int) aluno.getId());
+		alunoDto.setNome(aluno.getNome());
+		alunoDto.setSerie(aluno.getSerie());
+		alunoDto.setPerfil(aluno.getPerfil());
+		alunoDto.setUsuario(aluno.getUsuario());
+		alunoDto.setSenha(aluno.getSenha());
+		
+		return alunoDto;
 	}
-
-
 }

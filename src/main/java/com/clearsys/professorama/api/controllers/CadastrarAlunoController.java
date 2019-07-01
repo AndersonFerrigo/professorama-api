@@ -71,7 +71,7 @@ public class CadastrarAlunoController {
 			throws NoSuchAlgorithmException{
 		
 		Aluno aluno = new Aluno();
-		aluno.setId(alunoDto.getId());
+		aluno.setId((int) alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
 		aluno.setSerie(alunoDto.getSerie());
 		aluno.setPerfil(alunoDto.getPerfil());
@@ -84,7 +84,7 @@ public class CadastrarAlunoController {
 	
 		AlunoDto alunoDto = new AlunoDto();
 		
-		alunoDto.setId(aluno.getId());
+		alunoDto.setId((int) aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
 		alunoDto.setPerfil(aluno.getPerfil());

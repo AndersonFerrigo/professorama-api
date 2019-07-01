@@ -4,11 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +24,6 @@ public class Atividade implements Serializable{
 	private String dataInicio;
 	private String dataEntrega;
 	private String descricao;
-	private Professor professor;
 	
 	public Atividade() {}
 	
@@ -85,19 +82,10 @@ public class Atividade implements Serializable{
 		this.descricao = descricao;
 	}
 
-	@ManyToOne( fetch = FetchType.LAZY )
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
 	@Override
 	public String toString() {
 		return "Atividade [id=" + id + ", materia=" + materia + ", serie=" + serie + ", dataInicio=" + dataInicio
-				+ ", dataEntrega=" + dataEntrega + ", descricao=" + descricao + ", professor=" + professor + "]";
+				+ ", dataEntrega=" + dataEntrega + ", descricao=" + descricao +  "]";
 	}
 
 

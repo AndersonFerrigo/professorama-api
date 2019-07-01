@@ -232,7 +232,6 @@ public class AtividadeController {
 		atividadeDto.setDataInicio(atividade.getDataInicio());
 		atividadeDto.setDataEntrega(atividade.getDataEntrega());
 		atividadeDto.setDescricao(atividade.getDescricao());
-		atividadeDto.setProfessor_id(atividade.getProfessor().getId());
 	
 		return atividadeDto;
 	}
@@ -274,8 +273,6 @@ public class AtividadeController {
 		atividade.setDataEntrega(atividadeDto.getDataEntrega());
 		atividade.setDescricao(atividadeDto.getDescricao());
 		
-		atividade.setProfessor(new Professor());
-		atividade.getProfessor().setId(atividadeDto.getProfessor_id());
 		log.info("Atividade convertida dto sem id professor {}",atividade.toString() );
 			
 		

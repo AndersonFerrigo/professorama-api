@@ -18,22 +18,22 @@ public class Aluno implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	private int id;
 	private String nome;
 	private String serie;
+	private String perfil;
 	private String usuario;
 	private String senha;
-	private String perfil;
 	
 	public Aluno() {}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 		
@@ -55,6 +55,15 @@ public class Aluno implements Serializable{
 		this.serie = serie;
 	}
 	
+	@Column(name = "perfil", nullable = false)
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
 	@Column(name="usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
@@ -65,15 +74,7 @@ public class Aluno implements Serializable{
 	}
 	
 	
-	@Column(name = "perfil", nullable = false)
-	public String getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
-	}
-
+	
 	@Column(name="senha", nullable = false)
 	public String getSenha() {
 		return senha;
@@ -86,9 +87,14 @@ public class Aluno implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", nome=" + nome + ", serie=" + serie + ", usuario=" + usuario + ", senha=" + senha
-				+ "]";
+		return "Aluno ["
+				+ "id=" + id 
+				+ ", nome=" + nome 
+				+ ", serie=" + serie 
+				+ ", perfil=" + perfil 
+				+ ", usuario=" + usuario
+				+ ", senha=" + senha + "]";
 	}
-	
+
 	
 }

@@ -18,7 +18,7 @@ public class Professor implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private int id;
 	private String nome;
 	private String materia;
 	private String usuario;
@@ -29,15 +29,15 @@ public class Professor implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
-	@Column(name = "professor_nome", nullable = false)
+	@Column(name = "nome", nullable = false)
 	public String getNome() {
 		return nome;
 	}
@@ -46,7 +46,7 @@ public class Professor implements Serializable{
 		this.nome = nome;
 	}
 	
-	@Column(name="professor_materia", nullable = false)
+	@Column(name="materia", nullable = false)
 	public String getMateria() {
 		return materia;
 	}
@@ -55,7 +55,7 @@ public class Professor implements Serializable{
 		this.materia = materia;
 	}
 
-	@Column(name = "professor_usuario", nullable = false)
+	@Column(name = "usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
 	}
@@ -73,7 +73,7 @@ public class Professor implements Serializable{
 		this.perfil = perfil;
 	}
 	
-	@Column(name = "professor_senha", nullable = false)
+	@Column(name = "senha", nullable = false)
 	public String getSenha() {
 		return senha;
 	}

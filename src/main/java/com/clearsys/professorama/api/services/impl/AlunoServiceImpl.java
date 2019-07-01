@@ -37,7 +37,7 @@ public class AlunoServiceImpl implements AlunoService{
 
 	@Override
 	@Cacheable("alunoPorId")
-	public Optional<Aluno> buscarPorId(Long id) {
+	public Optional<Aluno> buscarPorId(int id) {
 		log.info("Buscando um aluno pelo id {}", id);
 		return alunoRepository.findById(id); 
 
@@ -45,9 +45,9 @@ public class AlunoServiceImpl implements AlunoService{
 
 	
 	@Override
-	public Optional<Aluno> buscarLogin(String user, String senha) {
-		log.info("Buscando um aluno pelo usuario {} e pela senha {} ", user,senha);
-		return alunoRepository.findByUsuarioAndSenha(user, senha);
+	public Optional<Aluno> buscarLogin(String usuario, String senha) {
+		log.info("Buscando um aluno na implentação service pelo usuario {} e pela senha {} ", usuario,senha);
+		return alunoRepository.findByUsuarioAndSenha(usuario, senha);
 	}
 
 	@Override
@@ -58,9 +58,9 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
-	public void remover(Long id) {
+	public void remover(int id) {
 		log.info("Removendo aluno {} ", id);
-		this.alunoRepository.deleteById(id);
+	//	this.alunoRepository.deleteById(id);
 		
 	}
 }
