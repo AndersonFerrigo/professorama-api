@@ -8,20 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clearsys.professorama.api.dtos.AlunoDto;
 import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.services.AlunoService;
-import com.clearsys.professorama.api.utils.PasswordUtils;
 
 @RestController
 @RequestMapping("/api/login-aluno")
@@ -67,33 +62,5 @@ public class AlunoLoginController {
 		LOG.info("Buscando aluno pelo usuario  {} antes de chamar o metodo ", usuario);
 		
 		return ResponseEntity.ok(aluno.get());
-	}
-
-	
-	private Aluno converterDtoParaAluno(AlunoDto alunoDto, BindingResult result)
-			throws NoSuchAlgorithmException{
-		
-		Aluno aluno = new Aluno();
-		aluno.setId((int) alunoDto.getId());
-		aluno.setNome(alunoDto.getNome());
-		aluno.setSerie(alunoDto.getSerie());
-		aluno.setPerfil(alunoDto.getPerfil());
-		aluno.setUsuario(alunoDto.getUsuario());
-		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
-		return aluno;
-	}
-	
-	private AlunoDto converterCadastroAlunoDto(Aluno aluno) {
-	
-		AlunoDto alunoDto = new AlunoDto();
-		
-		alunoDto.setId((int) aluno.getId());
-		alunoDto.setNome(aluno.getNome());
-		alunoDto.setSerie(aluno.getSerie());
-		alunoDto.setPerfil(aluno.getPerfil());
-		alunoDto.setUsuario(aluno.getUsuario());
-		alunoDto.setSenha(aluno.getSenha());
-		
-		return alunoDto;
 	}
 }

@@ -2,6 +2,8 @@ package com.clearsys.professorama.api.services.impl;
 
 import java.util.Optional;
 
+import javax.persistence.PreRemove;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
@@ -51,6 +53,12 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
+	public Optional<Aluno> buscarPorRa(String ra){
+		log.info("Buscando um aluno na implentação service pelo ra {} ",ra);
+		return alunoRepository.findByRa(ra);
+	}
+	
+	@Override
 	@CachePut("alunoPorId")
 	public Aluno persistir(Aluno aluno) {
 		log.info("Persistindo aluno {}", aluno);
@@ -58,9 +66,10 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 
 	@Override
-	public void remover(int id) {
-		log.info("Removendo aluno {} ", id);
-	//	this.alunoRepository.deleteById(id);
+	
+	public void deletar(String ra) {
+		log.info("Removendo aluno pelo ra: {} ", ra);
+		this.alunoRepository.deleteAlunoByRa(ra);
 		
 	}
 }

@@ -23,7 +23,6 @@ public class Professor implements Serializable{
 	private String materia;
 	private String usuario;
 	private String senha;
-	private String perfil;
 	
 	public Professor() {}
 
@@ -62,15 +61,6 @@ public class Professor implements Serializable{
 	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}
-
-	@Column(name = "perfil", nullable = false)
-	public String getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
 	}
 	
 	@Column(name = "senha", nullable = false)

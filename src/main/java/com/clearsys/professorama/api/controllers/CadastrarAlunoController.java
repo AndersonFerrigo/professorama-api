@@ -65,18 +65,19 @@ public class CadastrarAlunoController {
 		this.alunoService.buscarPorUsuario(alunoDto.getUsuario())
 				.ifPresent(alu->result.addError(new ObjectError("Aluno", "Usuario já existe")));
 		
+		
 	}
 
 	private Aluno converterDtoParaAluno(AlunoDto alunoDto, BindingResult result)
 			throws NoSuchAlgorithmException{
 		
 		Aluno aluno = new Aluno();
-		aluno.setId((int) alunoDto.getId());
+		aluno.setId(alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
 		aluno.setSerie(alunoDto.getSerie());
-		aluno.setPerfil(alunoDto.getPerfil());
+		aluno.setRa(alunoDto.getRa());
 		aluno.setUsuario(alunoDto.getUsuario());
-		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
+		aluno.setSenha(alunoDto.getSenha());
 		return aluno;
 	}
 	
@@ -84,10 +85,10 @@ public class CadastrarAlunoController {
 	
 		AlunoDto alunoDto = new AlunoDto();
 		
-		alunoDto.setId((int) aluno.getId());
+		alunoDto.setId(aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
-		alunoDto.setPerfil(aluno.getPerfil());
+		alunoDto.setRa(aluno.getRa());
 		alunoDto.setUsuario(aluno.getUsuario());
 		alunoDto.setSenha(aluno.getSenha());
 		

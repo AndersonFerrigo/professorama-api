@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -24,14 +25,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clearsys.professorama.api.dtos.AlunoDto;
+import com.clearsys.professorama.api.dtos.AtividadeDto;
 import com.clearsys.professorama.api.entities.Aluno;
+import com.clearsys.professorama.api.entities.Atividade;
 import com.clearsys.professorama.api.response.Response;
 import com.clearsys.professorama.api.services.AlunoService;
-import com.clearsys.professorama.api.utils.PasswordUtils;
 
 @RestController
 @RequestMapping("/api/aluno")
 @CrossOrigin(origins ="*")
+
 public class AlunoController {
 
 	private static final  Logger LOG =LoggerFactory.getLogger(AlunoController.class );
@@ -41,6 +44,7 @@ public class AlunoController {
 
 	public AlunoController(){}
 		
+	
 	@PostMapping 
 	public ResponseEntity<Response<AlunoDto>> cadastrar (@Valid @RequestBody AlunoDto alunoDto, 
 			BindingResult result )throws NoSuchAlgorithmException{
@@ -113,7 +117,7 @@ public class AlunoController {
 	*/
 	
 	
-	
+/*	
 	
 	@GetMapping("/{usuario}")
 	public ResponseEntity<Response<AlunoDto>> buscarPorUsuario(@PathVariable("usuario") String usuario){
@@ -133,7 +137,24 @@ public class AlunoController {
 		return ResponseEntity.ok(response);
 	}
 
+*/
 	
+	@RequestMapping(value="/ra/{ra}" ,method=RequestMethod.GET )
+	public ResponseEntity<Aluno> buscarPorRa(@PathVariable("ra") String ra) throws NoSuchAlgorithmException{
+		LOG.info("Buscando aluno pelo ra {}", ra);
+	
+		Optional<Aluno> aluno = this.alunoService.buscarPorRa(ra);
+	
+		if(!aluno.isPresent()){
+			LOG.error("Erro validando dados login de Aluno: {}", aluno);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+			
+		LOG.info("Buscando aluno pelo ra {} antes de chamar o metodo ", ra);
+		converterCadastroAlunoDto(aluno.get());
+		return ResponseEntity.ok(aluno.get());
+	}
+
 	
 	
 	@PostMapping(value="/usuario/{usuario}/senha/{senha}")
@@ -157,14 +178,14 @@ public class AlunoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/atualiza/{id}")
 	public ResponseEntity<Response<AlunoDto>> atualizar(@PathVariable("id") int id,
 				@Valid @RequestBody AlunoDto alunoDto, BindingResult result ) throws ParseException, NoSuchAlgorithmException{
 		
 		LOG.info("Atualizando aluno {}", alunoDto.toString() );
 		Response<AlunoDto> response = new Response<AlunoDto>();
-	
+//		validarProfessor(atividadeDto, result);
+		alunoDto.setId(id);
 		Aluno aluno = this.converterDtoParaAluno(alunoDto, result);
 		
 		
@@ -182,25 +203,41 @@ public class AlunoController {
 		
 		
 	}
+
+	
+	@RequestMapping(value = "/atualizaAluno/{ra}", method = RequestMethod.PUT)
+	public ResponseEntity<Aluno> atualizar(@PathVariable("ra") String ra,
+				@Valid @RequestBody Aluno aluno, BindingResult result ) throws ParseException, NoSuchAlgorithmException{
+		
+	    LOG.info("Atualizando aluno {}", aluno.toString() );
+		
+		if(aluno.equals(null)){
+			LOG.error("Erro validando dados  Aluno: {}", aluno);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		aluno = this.alunoService.persistir(aluno);
+		converterCadastroAlunoDto(aluno);
+		return ResponseEntity.ok(aluno);		
+	}
 	
 	
-	@DeleteMapping(value= "/{id}")
-	public ResponseEntity<Response<String>> remover(@PathVariable("id") int id){
-		LOG.info("Removendo aluno {}", id);
+	@RequestMapping(value= "/deletar/{ra}" , method = RequestMethod.DELETE)
+	public ResponseEntity<Response<String>> remover(@PathVariable("ra") String ra){
+		LOG.info("Removendo aluno pelo ra : {}", ra);
 		
 		Response<String> response = new Response<String>();
 	
-		Optional<Aluno> aluno = this.alunoService.buscarPorId(id);
+		Optional<Aluno> aluno = this.alunoService.buscarPorRa(ra);
 		
 		if(!aluno.isPresent()) {
-			LOG.error("Erro ao remover aluno {}", id);
-			response.getErrors().add("Erro ao remover aluno. Registro não encontrado para o id " + id);
+			LOG.error("Erro ao remover aluno pelo ra: {}", ra);
+			response.getErrors().add("Erro ao remover aluno. Registro não encontrado para o ra " + ra);
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		this.alunoService.remover(id);
-		return ResponseEntity.ok(response);
-	
+		this.alunoService.deletar(ra);
+		return new ResponseEntity<>(HttpStatus.OK);	
 	
 }
 
@@ -230,12 +267,12 @@ public class AlunoController {
 			throws NoSuchAlgorithmException{
 		
 		Aluno aluno = new Aluno();
-		aluno.setId((int) alunoDto.getId());
+		aluno.setId(alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
 		aluno.setSerie(alunoDto.getSerie());
-		aluno.setPerfil(alunoDto.getPerfil());
+		aluno.setRa(alunoDto.getRa());
 		aluno.setUsuario(alunoDto.getUsuario());
-		aluno.setSenha(PasswordUtils.gerarBCrypt(alunoDto.getSenha()));
+		aluno.setSenha(alunoDto.getSenha());
 		return aluno;
 	}
 	
@@ -243,10 +280,10 @@ public class AlunoController {
 	
 		AlunoDto alunoDto = new AlunoDto();
 		
-		alunoDto.setId((int) aluno.getId());
+		alunoDto.setId(aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
-		alunoDto.setPerfil(aluno.getPerfil());
+		alunoDto.setRa(aluno.getRa());
 		alunoDto.setUsuario(aluno.getUsuario());
 		alunoDto.setSenha(aluno.getSenha());
 		

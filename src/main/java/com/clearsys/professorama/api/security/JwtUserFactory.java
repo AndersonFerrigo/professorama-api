@@ -24,7 +24,7 @@ public class JwtUserFactory {
 	 */
 	public static JwtUser createAluno(Aluno aluno) {
 		return new JwtUser(aluno.getId(), aluno.getUsuario(), aluno.getSenha(),
-				mapToGrantedAuthorities(aluno.getPerfil()));
+				mapToGrantedAuthorities(aluno.getRa()));
 	}
 	
 	/**
@@ -34,10 +34,10 @@ public class JwtUserFactory {
 	 * @return JwtUser
 	 */
 	
-	public static JwtUser createProfessor(Professor professor) {
-		return new JwtUser(professor.getId(), professor.getUsuario(),professor.getSenha(),
-				mapToGrantedAuthorities(professor.getPerfil()));
-	}
+//	public static JwtUser createProfessor(Professor professor) {
+	//	return new JwtUser(professor.getId(), professor.getUsuario(),professor.getSenha(),
+//				mapToGrantedAuthorities(professor.getPerfil()));
+//	}
 
 	/**
 	 * Converte o perfil do usuário para o formato utilizado pelo Spring Security.

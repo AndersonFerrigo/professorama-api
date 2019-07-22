@@ -2,13 +2,13 @@ package com.clearsys.professorama.api.services;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.clearsys.professorama.api.entities.Aluno;
 
+@Service
 public interface AlunoService {
 	
-	
-	
-
 	/**
 	 * Retorna um aluno pelo id
 	 * 
@@ -32,7 +32,7 @@ public interface AlunoService {
 	 * Busca uma aluno cadastrado no sistema 
 	 * 
 	 * @param usuario
-	 * @param senha
+	 *
 	 * @return Optional<Aluno>
 	 * 
 	 */
@@ -41,13 +41,20 @@ public interface AlunoService {
 	/**
 	 * Retorna um RA de determinado aluno
 	 * 
-	 * @param ra
+	 * @param usuario
+	 * @param senha
 	 * @return Optional<Aluno> 
 	 */
 	
 	Optional<Aluno> buscarPorSerie(String serie); 
 	
 	
+	/**
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	Optional<Aluno> buscarPorRa(String ra);
 	
 	/**
 	 * Cadastra um novo aluno na base de dados
@@ -64,5 +71,5 @@ public interface AlunoService {
 	 * @param id
 	 */
 
-	void remover(int id);
+	void deletar(String ra);
 }

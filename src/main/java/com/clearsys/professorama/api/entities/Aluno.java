@@ -4,12 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.clearsys.professorama.api.services.impl.AlunoServiceImpl;
+
 @Entity
+@EntityListeners(AlunoServiceImpl.class)
 @Table(name = "aluno") 
 public class Aluno implements Serializable{
 	
@@ -21,7 +25,7 @@ public class Aluno implements Serializable{
 	private int id;
 	private String nome;
 	private String serie;
-	private String perfil;
+	private String ra;
 	private String usuario;
 	private String senha;
 	
@@ -55,15 +59,15 @@ public class Aluno implements Serializable{
 		this.serie = serie;
 	}
 	
-	@Column(name = "perfil", nullable = false)
-	public String getPerfil() {
-		return perfil;
+	@Column(name = "ra", nullable = false)
+	public String getRa() {
+		return ra;
 	}
 
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+	public void setRa(String ra) {
+		this.ra = ra;
 	}
-
+	
 	@Column(name="usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
@@ -87,14 +91,10 @@ public class Aluno implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Aluno ["
-				+ "id=" + id 
-				+ ", nome=" + nome 
-				+ ", serie=" + serie 
-				+ ", perfil=" + perfil 
-				+ ", usuario=" + usuario
+		return "Aluno [id=" + id + ", nome=" + nome + ", serie=" + serie + ", ra=" + ra + ", usuario=" + usuario
 				+ ", senha=" + senha + "]";
 	}
 
+	
 	
 }

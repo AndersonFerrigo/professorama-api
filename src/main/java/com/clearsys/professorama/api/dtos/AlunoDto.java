@@ -16,7 +16,7 @@ public class AlunoDto implements Serializable{
 	private int id;
 	private String nome;
 	private String serie;
-	private String perfil; 
+	private String ra; 
 	private String usuario;
 	private String senha;
 	
@@ -49,13 +49,14 @@ public class AlunoDto implements Serializable{
 		this.serie = serie;
 	}
 
+	
 	@Length(min = 1, max = 100, message = "Nome deve conter entre 1 e 100 caracteres." )
-	public String getPerfil() {
-		return perfil;
+	public String getRa() {
+		return ra;
 	}
 
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+	public void setRa(String ra) {
+		this.ra = ra;
 	}
 
 	@NotNull(message = "O campo usuário não pode ser vazio")
@@ -77,16 +78,15 @@ public class AlunoDto implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-		
+
+
 	@Override
 	public String toString() {
-		return "Aluno ["
-				+ "id=" + id 
-				+ ", nome=" + nome 
-				+ ", serie=" + serie 
-				+ ", perfil=" + perfil 
-				+ ", usuario=" + usuario
+		return "AlunoDto [id=" + id + ", nome=" + nome + ", serie=" + serie + ", ra=" + ra + ", usuario=" + usuario
 				+ ", senha=" + senha + "]";
 	}
+		
+
 
 }
+	
