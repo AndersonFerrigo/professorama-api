@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clearsys.professorama.api.dtos.AtividadeDto;
@@ -75,24 +77,44 @@ public class AtividadeController {
 	
 	// Criar um list para recuperar todas as atividades
 	
-	@GetMapping(value = "/{serie}")
-	public ResponseEntity <Response<List<AtividadeDto>>> listarPorSerie(@PathVariable("serie") String serie){
+	@RequestMapping(value="/buscarAtividade/{serie}" ,method=RequestMethod.GET )
+
+	public ResponseEntity <List<Atividade>> listarPorSerie(@PathVariable("serie") String serie){
 		log.info("Buscando atividades pela serie {}", serie);
 		
-		Response<List<AtividadeDto>> response = new Response<List<AtividadeDto>>();
-		Optional<Atividade> atividade = this.atividadeService.buscarPorSerie(serie);
+		Optional<List<Atividade>> atividade = this.atividadeService.buscarPorSerie(serie);
 	
 		if(!atividade.isPresent()) {
 			log.info("Atividade não encontrada para a serie {}", serie);
-			response.getErrors().add("Atividade não encontrada para a serie " + serie);
-			return ResponseEntity.badRequest().body(response);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		log.info("Buscando atividades pela serie {} antes de chamar o metodo ", serie);
+		
+		return new ResponseEntity<List<Atividade>>(atividade.get(),HttpStatus.OK);
 
-	//	response.setData(this.converterCadastroAtividadeDto(atividade.get()));
-		return ResponseEntity.ok(response);
+		
 	}
+
+	@RequestMapping(value="/buscarPorMateria/{materia}" ,method=RequestMethod.GET )
+
+	public ResponseEntity <List<Atividade>> listarPorMateria(@PathVariable("materia") String materia){
+		log.info("Buscando atividades pela materia {}", materia);
+		
+		Optional<List<Atividade>> atividade = this.atividadeService.buscarPorMateria(materia);
+	
+		if(!atividade.isPresent()) {
+			log.info("Atividade não encontrada para a materia {}", materia);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		log.info("Buscando atividades pela maeria {} antes de chamar o metodo ", materia);
+		
+		return new ResponseEntity<List<Atividade>>(atividade.get(),HttpStatus.OK);
+
+		
+	}
+
 	
 	/**
 	 * Cadastrando uma nova atividade

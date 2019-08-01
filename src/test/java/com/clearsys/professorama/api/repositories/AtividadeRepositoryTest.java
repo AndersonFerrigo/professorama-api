@@ -2,6 +2,8 @@ package com.clearsys.professorama.api.repositories;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,8 +50,8 @@ public class AtividadeRepositoryTest {
 
 	@Test
 	public void buscaPorMateria() {
-		Atividade atividade = this.atividadeRepository.findByMateria(materia);
-		assertEquals(materia,atividade.getMateria());
+		List<Atividade> atividade = this.atividadeRepository.findByMateria(materia);
+		assertEquals(materia,((Atividade) atividade).getMateria());
 	}
 	
 	@Test

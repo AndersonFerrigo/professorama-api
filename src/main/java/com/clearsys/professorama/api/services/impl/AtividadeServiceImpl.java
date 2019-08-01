@@ -1,5 +1,6 @@
 package com.clearsys.professorama.api.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class AtividadeServiceImpl implements AtividadeService{
 
 	
 	@Override
-	public Optional<Atividade> buscarPorMateria(String materia){
+	public Optional<List<Atividade>> buscarPorMateria(String materia){
 		log.info("Buscando uma atividade pela materia {}", materia);
 		return Optional.ofNullable(atividadeRepository.findByMateria(materia));
 	}
@@ -36,8 +37,9 @@ public class AtividadeServiceImpl implements AtividadeService{
 	}
 	
 	@Override
-	public Optional<Atividade> buscarPorSerie(String serie){
+	public Optional<List<Atividade>> buscarPorSerie(String serie){
 		log.info("Buscando uma atividade pela serie {}", serie);
+		
 		return Optional.ofNullable(atividadeRepository.findBySerie(serie));
 		
 	}

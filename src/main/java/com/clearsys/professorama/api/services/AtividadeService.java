@@ -1,5 +1,6 @@
 package com.clearsys.professorama.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.clearsys.professorama.api.entities.Atividade;
@@ -23,7 +24,7 @@ public interface AtividadeService {
 	 * @param materia
 	 * @return Optional<Atividade>
 	 */
-	Optional<Atividade> buscarPorMateria(String materia);
+	Optional<List<Atividade>> buscarPorMateria(String materia);
 	
 	/**
 	 * Retorna uma atividade com base na data de entrega
@@ -39,7 +40,7 @@ public interface AtividadeService {
 	 * @param nivelEscolar
 	 * @return Optional<Atividade>
 	 */
-	Optional<Atividade> buscarPorSerie(String serie);
+	Optional<List<Atividade>> buscarPorSerie(String serie);
 	
 	
 	/**

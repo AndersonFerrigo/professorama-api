@@ -1,6 +1,7 @@
 package com.clearsys.professorama.api.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,7 +82,7 @@ public class Atividade implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Atividade [id=" + id + ", materia=" + materia + ", serie=" + serie + ", dataInicio=" + dataInicio

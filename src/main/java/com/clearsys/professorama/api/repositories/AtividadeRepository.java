@@ -1,5 +1,6 @@
 package com.clearsys.professorama.api.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,8 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long>  {
 	
 	@Override
 	Optional<Atividade> findById(Long id);
-	Atividade findByMateria(String materia);
+	List<Atividade> findByMateria(String materia);
 	Atividade findByDataEntrega(String dataEntrega);
-	Atividade findBySerie(String serie);
+	List<Atividade> findBySerie(String serie);
 		
 }
