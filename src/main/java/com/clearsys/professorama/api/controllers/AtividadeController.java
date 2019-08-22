@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clearsys.professorama.api.dtos.AtividadeDto;
+import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.entities.Atividade;
 import com.clearsys.professorama.api.entities.Professor;
 import com.clearsys.professorama.api.response.Response;
@@ -52,33 +53,32 @@ public class AtividadeController {
 	 * Retorna uma atividade com base no id
 	 * 
 	 * @param id
-	 * @return ResponseEntity<Response<CadastroAtividadeDto>>
+	 * @return ResponseEntzity<Response<CadastroAtividadeDto>>
 	 */
 	
 	// Erro aqui retornando professor 
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Response<AtividadeDto>> listarPorId(@PathVariable("id") Long id){
+	@RequestMapping(value="/buscarAtividadeAtualizar/{id}" ,method=RequestMethod.GET )
+	public ResponseEntity<Atividade> listarPorId(@PathVariable("id") long id){
 		log.info("Buscando atividades pelo id {}", id);
-		Response<AtividadeDto> response = new Response<AtividadeDto>();
+		
 		Optional<Atividade> atividade = this.atividadeService.buscarPorId(id);
 	
 		if(!atividade.isPresent()) {
 			log.info("Atividade não encontrada para o id {}", id);
-			response.getErrors().add("Atividade não encontrada para o id " + id);
-			return ResponseEntity.badRequest().body(response);
-		}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
 		
 		log.info("Buscando atividades pelo id {} antes de chamar o metodo ", id);
 		
-		response.setData(this.converterCadastroAtividadeDto(atividade.get()));
-		return ResponseEntity.ok(response);
+		
+		return new ResponseEntity<Atividade>(atividade.get(),HttpStatus.OK);
+
 	}
 	
 	// Criar um list para recuperar todas as atividades
 	
 	@RequestMapping(value="/buscarAtividade/{serie}" ,method=RequestMethod.GET )
-
 	public ResponseEntity <List<Atividade>> listarPorSerie(@PathVariable("serie") String serie){
 		log.info("Buscando atividades pela serie {}", serie);
 		
@@ -159,6 +159,24 @@ public class AtividadeController {
 	 * @throws NoSuchAlgorithmException 
 	 * @throws Exception
 	 */
+	
+	@RequestMapping(value = "/atualizaAtividade/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Atividade> atualizar(@PathVariable("id") long id,
+				@Valid @RequestBody Atividade atividade, BindingResult result ) throws ParseException, NoSuchAlgorithmException{
+		
+	    log.info("Atualizando atividade {}", atividade.toString() );
+		
+		if(atividade.equals(null)){
+			log.error("Erro validando dados  Atividade: {}", atividade);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		atividade = this.atividadeService.persistir(atividade);
+		return ResponseEntity.ok(atividade);		
+	}
+
+	
+	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Response<AtividadeDto>> atualizar(@PathVariable("id") Long id,
 				@Valid @RequestBody AtividadeDto atividadeDto, BindingResult result ) throws ParseException, NoSuchAlgorithmException{
@@ -185,25 +203,29 @@ public class AtividadeController {
 		
 	}
 		
-	@DeleteMapping(value= "/{id}")
+	@RequestMapping(value= "/deletarAtividade/{id}" , method = RequestMethod.DELETE)
 	public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id){
-		log.info("Removendo atividade {}", id);
+		log.info("Removendo atividade pelo id : {}", id);
 		
 		Response<String> response = new Response<String>();
 	
 		Optional<Atividade> atividade = this.atividadeService.buscarPorId(id);
 		
 		if(!atividade.isPresent()) {
-			log.error("Erro ao remover atividade {}", id);
-			response.getErrors().add("Erro ao remover lançamento. Registro não encontrado para o id " + id);
+			log.error("Erro ao remover atividade pelo id: {}", id);
+			response.getErrors().add("Erro ao remover atividade. Registro não encontrado para o id " + id);
 			return ResponseEntity.badRequest().body(response);
 		}
-	
-	this.atividadeService.remover(id);
-	return ResponseEntity.ok(response);
-	
-	
+		
+		this.atividadeService.deletar(id);
+		return new ResponseEntity<>(HttpStatus.OK);	
+		
 }
+
+	
+	
+	
+
 	
 	
 	private void validarProfessor(@Valid AtividadeDto atividadeDto, BindingResult result) {

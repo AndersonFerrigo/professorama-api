@@ -55,6 +55,7 @@ public interface AtividadeService {
 	 * Remove uma atividade da base de dados.
 	 * 
 	 * @param id
+	 * @return 
 	 */
-	void remover (Long id);
+	void deletar (Long id);
 }

@@ -59,9 +59,9 @@ public class AtividadeServiceImpl implements AtividadeService{
 	}
 
 	@Override
-	public void remover(Long id) {
+	public void deletar (Long id) {
 		log.info("Removendo atividade {} ", id);
-		this.atividadeRepository.deleteById(id);
+		this.atividadeRepository.deleteAtividadeById(id);
 	}
 	
 	
