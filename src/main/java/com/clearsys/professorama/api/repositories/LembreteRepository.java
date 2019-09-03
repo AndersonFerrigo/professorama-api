@@ -11,20 +11,21 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.clearsys.professorama.api.entities.Atividade;
+import com.clearsys.professorama.api.entities.Lembretes;
 
 @Transactional(readOnly = false)
-
 @Repository
-public interface AtividadeRepository extends JpaRepository<Atividade, Long>  {
-	
+public interface LembreteRepository extends JpaRepository<Lembretes, Long> {
+
 	@Override
-	Optional<Atividade> findById(Long id);
-	List<Atividade> findByMateria(String materia);
-	Atividade findByDataEntrega(String dataEntrega);
-	List<Atividade> findBySerie(String serie);
+	Optional<Lembretes> findById(Long id);
+	List<Lembretes> findByMateria(String materia);
+	Lembretes findByData(String data);
+	List<Lembretes> findBySerie(String serie);
 
 	@Modifying
-	@Query(value = "delete from atividade where id =:id ", nativeQuery = true)
-	void deleteAtividadeById(@Param("id") Long id);
+	@Query(value = "delete from lembretes where id =:id ", nativeQuery = true)
+	void deleteLembreteById(@Param("id") Long id);
 	
+
 }

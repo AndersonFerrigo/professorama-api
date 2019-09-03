@@ -24,3 +24,13 @@ CREATE TABLE `atividade`(
 	`descricao` text not null
 	
 ); 
+
+CREATE TABLE `lembrete`(
+	`id` int not null PRIMARY KEY AUTO_INCREMENT,
+	`materia` varchar(60) not null,
+	`serie` varchar(60) not null,
+	`data` varchar(20) not null,
+	`assunto` varchar(40) not null,
+	`descricao` text not null
+	
+); 
