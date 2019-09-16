@@ -103,8 +103,8 @@ public class JwtTokenUtil {
 	}
 
 	/**
-	 * Realiza o parse do token JWT para extrair as informações contidas no
-	 * corpo dele.
+	 * Realiza o parse do token JWT para extrair as informações contidas no corpo
+	 * dele.
 	 * 
 	 * @param token
 	 * @return Claims

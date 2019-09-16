@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clearsys.professorama.api.entities.Atividade;
 import com.clearsys.professorama.api.entities.Lembretes;
 
 @Transactional(readOnly = false)
@@ -19,13 +18,15 @@ public interface LembreteRepository extends JpaRepository<Lembretes, Long> {
 
 	@Override
 	Optional<Lembretes> findById(Long id);
+
 	List<Lembretes> findByMateria(String materia);
+
 	Lembretes findByData(String data);
+
 	List<Lembretes> findBySerie(String serie);
 
 	@Modifying
-	@Query(value = "delete from lembretes where id =:id ", nativeQuery = true)
+	@Query(value = "delete from lembrete where id =:id ", nativeQuery = true)
 	void deleteLembreteById(@Param("id") Long id);
-	
 
 }

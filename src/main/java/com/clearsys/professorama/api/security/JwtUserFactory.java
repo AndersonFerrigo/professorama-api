@@ -7,15 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.clearsys.professorama.api.entities.Aluno;
-import com.clearsys.professorama.api.entities.Professor;
 
 public class JwtUserFactory {
-
 
 	private JwtUserFactory() {
 	}
 
-	
 	/**
 	 * Converte e gera um JwtUser com base nos dados de um aluno.
 	 * 
@@ -23,21 +20,21 @@ public class JwtUserFactory {
 	 * @return JwtUser
 	 */
 	public static JwtUser createAluno(Aluno aluno) {
-		return new JwtUser(aluno.getId(), aluno.getUsuario(), aluno.getSenha(),
-				mapToGrantedAuthorities(aluno.getRa()));
+		return new JwtUser(aluno.getId(), aluno.getUsuario(), aluno.getSenha(), mapToGrantedAuthorities(aluno.getRa()));
 	}
-	
+
 	/**
 	 * Converte e gera um JwtUser com base nos dados de um professor.
 	 * 
 	 * @param professor
 	 * @return JwtUser
 	 */
-	
-//	public static JwtUser createProfessor(Professor professor) {
-	//	return new JwtUser(professor.getId(), professor.getUsuario(),professor.getSenha(),
-//				mapToGrantedAuthorities(professor.getPerfil()));
-//	}
+
+	// public static JwtUser createProfessor(Professor professor) {
+	// return new JwtUser(professor.getId(),
+	// professor.getUsuario(),professor.getSenha(),
+	// mapToGrantedAuthorities(professor.getPerfil()));
+	// }
 
 	/**
 	 * Converte o perfil do usuário para o formato utilizado pelo Spring Security.

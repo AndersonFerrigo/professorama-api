@@ -20,57 +20,53 @@ import com.clearsys.professorama.api.dtos.AlunoDto;
 import com.clearsys.professorama.api.entities.Aluno;
 import com.clearsys.professorama.api.response.Response;
 import com.clearsys.professorama.api.services.AlunoService;
-import com.clearsys.professorama.api.utils.PasswordUtils;
 
 @RestController
 @RequestMapping("/api/cadastrar-aluno")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins = "*")
 
 public class CadastrarAlunoController {
 
-	private static final  Logger LOG =LoggerFactory.getLogger(CadastrarAlunoController.class );
+	private static final Logger LOG = LoggerFactory.getLogger(CadastrarAlunoController.class);
 
 	@Autowired
 	private AlunoService alunoService;
-	
+
 	public CadastrarAlunoController() {
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Response<AlunoDto>> cadastrar (@Valid @RequestBody AlunoDto alunoDto, 
-			BindingResult result )throws NoSuchAlgorithmException{
-			
+	public ResponseEntity<Response<AlunoDto>> cadastrar(@Valid @RequestBody AlunoDto alunoDto, BindingResult result)
+			throws NoSuchAlgorithmException {
+
 		LOG.info("Cadastrando Aluno {}", alunoDto.toString());
 		Response<AlunoDto> response = new Response<AlunoDto>();
-		
-		validarDadosExixtentes(alunoDto, result );
+
+		validarDadosExixtentes(alunoDto, result);
 		Aluno aluno = this.converterDtoParaAluno(alunoDto, result);
-		
-		if(result.hasErrors()) {
+
+		if (result.hasErrors()) {
 			LOG.error("Erro validando dados cadastro de Aluno: {}", result.getAllErrors());
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
-			
+
 		}
-	
+
 		this.alunoService.persistir(aluno);
-		
+
 		response.setData(this.converterCadastroAlunoDto(aluno));
 		return ResponseEntity.ok(response);
-		
-		
+
 	}
 
 	private void validarDadosExixtentes(AlunoDto alunoDto, BindingResult result) {
 		this.alunoService.buscarPorUsuario(alunoDto.getUsuario())
-				.ifPresent(alu->result.addError(new ObjectError("Aluno", "Usuario já existe")));
-		
-		
+				.ifPresent(alu -> result.addError(new ObjectError("Aluno", "Usuario já existe")));
+
 	}
 
-	private Aluno converterDtoParaAluno(AlunoDto alunoDto, BindingResult result)
-			throws NoSuchAlgorithmException{
-		
+	private Aluno converterDtoParaAluno(AlunoDto alunoDto, BindingResult result) throws NoSuchAlgorithmException {
+
 		Aluno aluno = new Aluno();
 		aluno.setId(alunoDto.getId());
 		aluno.setNome(alunoDto.getNome());
@@ -80,21 +76,19 @@ public class CadastrarAlunoController {
 		aluno.setSenha(alunoDto.getSenha());
 		return aluno;
 	}
-	
+
 	private AlunoDto converterCadastroAlunoDto(Aluno aluno) {
-	
+
 		AlunoDto alunoDto = new AlunoDto();
-		
+
 		alunoDto.setId(aluno.getId());
 		alunoDto.setNome(aluno.getNome());
 		alunoDto.setSerie(aluno.getSerie());
 		alunoDto.setRa(aluno.getRa());
 		alunoDto.setUsuario(aluno.getUsuario());
 		alunoDto.setSenha(aluno.getSenha());
-		
+
 		return alunoDto;
 	}
 
-
-	
 }

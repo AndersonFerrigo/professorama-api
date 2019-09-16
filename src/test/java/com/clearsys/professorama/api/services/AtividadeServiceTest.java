@@ -20,22 +20,23 @@ import com.clearsys.professorama.api.repositories.AtividadeRepository;
 @SpringBootTest()
 @ActiveProfiles("test")
 public class AtividadeServiceTest {
-	
+
 	@MockBean
 	private AtividadeRepository atividadeRepository;
-	
+
 	@Autowired
 	private AtividadeService atividadeService;
 
 	@Before
-	public void setup () throws Exception{
-		BDDMockito.given(this.atividadeRepository.save(ArgumentMatchers.any(Atividade.class))).willReturn(new Atividade());
+	public void setup() throws Exception {
+		BDDMockito.given(this.atividadeRepository.save(ArgumentMatchers.any(Atividade.class)))
+				.willReturn(new Atividade());
 	}
-	
+
 	@Test
 	public void testPersistirAtividade() {
 		Atividade atividade = this.atividadeService.persistir(new Atividade());
 		assertNotNull(atividade);
 	}
-	
+
 }

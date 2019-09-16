@@ -3,10 +3,10 @@ package com.clearsys.professorama.api.security.dto;
 import javax.validation.constraints.NotEmpty;
 
 public class JwtAuthenticationDto {
-	
+
 	private String usuario;
 	private String senha;
-	
+
 	public JwtAuthenticationDto() {
 	}
 
@@ -32,7 +32,5 @@ public class JwtAuthenticationDto {
 	public String toString() {
 		return "JwtAuthenticationDto [usuario=" + usuario + ", senha=" + senha + "]";
 	}
-	
-	
-	
+
 }

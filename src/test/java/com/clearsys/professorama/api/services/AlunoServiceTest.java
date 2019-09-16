@@ -20,20 +20,18 @@ import com.clearsys.professorama.api.repositories.AlunoRepository;
 @SpringBootTest()
 @ActiveProfiles("test")
 public class AlunoServiceTest {
-	
+
 	@MockBean
 	private AlunoRepository alunoRepository;
-	
+
 	@Autowired
 	private AlunoService alunoService;
-	
-	
+
 	@Before
-	public void setUp() throws Exception{
+	public void setUp() throws Exception {
 		BDDMockito.given(this.alunoRepository.save(ArgumentMatchers.any(Aluno.class))).willReturn(new Aluno());
 	}
-	
-	
+
 	@Test
 	public void testPersistirAluno() {
 		Aluno aluno = this.alunoService.persistir(new Aluno());

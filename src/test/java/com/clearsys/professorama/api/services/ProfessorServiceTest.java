@@ -25,23 +25,22 @@ public class ProfessorServiceTest {
 
 	@MockBean
 	private ProfessorRepository professorRepository;
-	
+
 	@Autowired
 	private ProfessorService professorService;
-	
+
 	private static final String NOME = "Roberto";
-	
+
 	@Before
 	public void testBuscaProfessorPorId() {
 		BDDMockito.given(this.professorRepository.findByNome(ArgumentMatchers.anyString())).willReturn(new Professor());
-	
+
 	}
-	
-	
+
 	@Test
 	public void testBuscarPorNome() {
 		Optional<Professor> professor = this.professorService.buscarPorNome(NOME);
 		assertTrue(professor.isPresent());
 	}
-		
+
 }

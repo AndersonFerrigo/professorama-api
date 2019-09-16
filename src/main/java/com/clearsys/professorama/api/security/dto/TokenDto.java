@@ -2,11 +2,11 @@ package com.clearsys.professorama.api.security.dto;
 
 public class TokenDto {
 
-	private String token; 
-	
+	private String token;
+
 	public TokenDto() {
 	}
-	
+
 	public TokenDto(String token) {
 		this.token = token;
 	}

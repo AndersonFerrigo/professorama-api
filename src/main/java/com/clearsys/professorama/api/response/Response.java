@@ -3,13 +3,13 @@ package com.clearsys.professorama.api.response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response<T>{
-	
+public class Response<T> {
+
 	private T data;
 	private List<String> errors;
-	
+
 	public Response() {
-	
+
 	}
 
 	public T getData() {
@@ -21,7 +21,7 @@ public class Response<T>{
 	}
 
 	public List<String> getErrors() {
-		if(this.errors == null) {
+		if (this.errors == null) {
 			this.errors = new ArrayList<String>();
 		}
 		return errors;
@@ -30,5 +30,5 @@ public class Response<T>{
 	public void setErrors(List<String> errors) {
 		this.errors = errors;
 	}
-		
+
 }

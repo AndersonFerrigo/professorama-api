@@ -32,12 +32,11 @@ import com.clearsys.professorama.api.security.utils.JwtTokenUtil;
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 	private static final String TOKEN_HEADER = "Authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
 
-	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -55,11 +54,10 @@ public class AuthenticationController {
 	 * @return ResponseEntity<Response<TokenDto>>
 	 * @throws AuthenticationException
 	 */
-	
+
 	@PostMapping
-	public ResponseEntity<Response<TokenDto>> gerarTokenJwt(
-			@Valid @RequestBody JwtAuthenticationDto authenticationDto, BindingResult result)
-			throws AuthenticationException {
+	public ResponseEntity<Response<TokenDto>> gerarTokenJwt(@Valid @RequestBody JwtAuthenticationDto authenticationDto,
+			BindingResult result) throws AuthenticationException {
 		Response<TokenDto> response = new Response<TokenDto>();
 
 		if (result.hasErrors()) {
@@ -69,8 +67,8 @@ public class AuthenticationController {
 		}
 
 		log.info("Gerando token para o usuario {}.", authenticationDto.getUsuario());
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				authenticationDto.getUsuario(), authenticationDto.getSenha()));
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(authenticationDto.getUsuario(), authenticationDto.getSenha()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDto.getUsuario());
@@ -80,40 +78,39 @@ public class AuthenticationController {
 		return ResponseEntity.ok(response);
 	}
 
-	
 	/**
 	 * Gera um novo token com uma nova data de expiração.
 	 * 
 	 * @param request
 	 * @return ResponseEntity<Response<TokenDto>>
 	 */
-	
+
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<Response<TokenDto>> gerarRefreshTokenJwt(HttpServletRequest request) {
 		log.info("Gerando refresh token JWT.");
 		Response<TokenDto> response = new Response<TokenDto>();
 		Optional<String> token = Optional.ofNullable(request.getHeader(TOKEN_HEADER));
-		
+
 		if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)) {
 			token = Optional.of(token.get().substring(7));
-        
+
 		}
-			if (!token.isPresent()) {
-				response.getErrors().add("Token não informado.");
-			
-			} else if (!jwtTokenUtil.tokenValido(token.get())) {
+		if (!token.isPresent()) {
+			response.getErrors().add("Token não informado.");
+
+		} else if (!jwtTokenUtil.tokenValido(token.get())) {
 			response.getErrors().add("Token inválido ou expirado.");
-			
-				}
-		
-			if (!response.getErrors().isEmpty()) { 
-				return ResponseEntity.badRequest().body(response);
-			}
-			
+
+		}
+
+		if (!response.getErrors().isEmpty()) {
+			return ResponseEntity.badRequest().body(response);
+		}
+
 		String refreshedToken = jwtTokenUtil.refreshToken(token.get());
 		response.setData(new TokenDto(refreshedToken));
 		return ResponseEntity.ok(response);
-	
-		}
+
+	}
 
 }

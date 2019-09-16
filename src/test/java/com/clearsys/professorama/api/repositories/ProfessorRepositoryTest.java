@@ -20,42 +20,37 @@ public class ProfessorRepositoryTest {
 
 	@Autowired
 	private ProfessorRepository professorRepository;
-	
-	
+
 	private static final String nome = "Antonio";
 	private static final String user = "AntonioProf";
 	private static final String password = "portuguesAnt";
-	
+
 	@Before
-	public  void setUp() throws Exception{
+	public void setUp() throws Exception {
 		Professor professor = new Professor();
 		professor.setNome(nome);
 		professor.setUsuario(user);
 		professor.setSenha(password);
-		
-		
+
 		this.professorRepository.save(professor);
 	}
-	
+
 	@After
 	public final void tearDown() {
 		this.professorRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void findByNome() {
 		Professor professor = this.professorRepository.findByNome(nome);
 		assertEquals(nome, professor.getNome());
 	}
-	
-	
+
 	@Test
 	public void findByUser() {
 		Professor professor = this.professorRepository.findByUsuario(user);
 		assertEquals(user, professor.getUsuario());
-		
+
 	}
-	
-	
-	
+
 }

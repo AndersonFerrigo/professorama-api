@@ -15,16 +15,19 @@ import com.clearsys.professorama.api.entities.Atividade;
 @Transactional(readOnly = false)
 
 @Repository
-public interface AtividadeRepository extends JpaRepository<Atividade, Long>  {
-	
+public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
+
 	@Override
 	Optional<Atividade> findById(Long id);
+
 	List<Atividade> findByMateria(String materia);
+
 	Atividade findByDataEntrega(String dataEntrega);
+
 	List<Atividade> findBySerie(String serie);
 
 	@Modifying
 	@Query(value = "delete from atividade where id =:id ", nativeQuery = true)
 	void deleteAtividadeById(@Param("id") Long id);
-	
+
 }

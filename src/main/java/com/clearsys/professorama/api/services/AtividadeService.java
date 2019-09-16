@@ -13,10 +13,8 @@ public interface AtividadeService {
 	 * @param id
 	 * @return Optional<Atividade>
 	 */
-	
 
 	Optional<Atividade> buscarPorId(Long id);
-	
 
 	/**
 	 * Retorna uma atividade com base na materia
@@ -25,7 +23,7 @@ public interface AtividadeService {
 	 * @return Optional<Atividade>
 	 */
 	Optional<List<Atividade>> buscarPorMateria(String materia);
-	
+
 	/**
 	 * Retorna uma atividade com base na data de entrega
 	 * 
@@ -33,16 +31,15 @@ public interface AtividadeService {
 	 * @return Optional<Atividade>
 	 */
 	Optional<Atividade> buscarPorDataEntrega(String dataEntrega);
-	
+
 	/**
-	 * Retorna uma atividade com base no nivel escolar 
+	 * Retorna uma atividade com base no nivel escolar
 	 * 
 	 * @param nivelEscolar
 	 * @return Optional<Atividade>
 	 */
 	Optional<List<Atividade>> buscarPorSerie(String serie);
-	
-	
+
 	/**
 	 * Cadastra uma nova atividade
 	 * 
@@ -50,12 +47,12 @@ public interface AtividadeService {
 	 * @return Atividade
 	 */
 	Atividade persistir(Atividade atividade);
-	
+
 	/**
 	 * Remove uma atividade da base de dados.
 	 * 
 	 * @param id
-	 * @return 
+	 * @return
 	 */
-	void deletar (Long id);
+	void deletar(Long id);
 }

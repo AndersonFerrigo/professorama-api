@@ -14,51 +14,52 @@ import com.clearsys.professorama.api.services.impl.AlunoServiceImpl;
 
 @Entity
 @EntityListeners(AlunoServiceImpl.class)
-@Table(name = "aluno") 
-public class Aluno implements Serializable{
-	
+@Table(name = "aluno")
+public class Aluno implements Serializable {
+
 	/**
 	 * Entidade responsável por representar um Aluno no sistema
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String nome;
 	private String serie;
 	private String ra;
 	private String usuario;
 	private String senha;
-	
-	public Aluno() {}
-	
+
+	public Aluno() {
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-		
-	@Column(name="nome", nullable = false)
+
+	@Column(name = "nome", nullable = false)
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	@Column(name="serie", nullable = false)
+	@Column(name = "serie", nullable = false)
 	public String getSerie() {
 		return serie;
 	}
-	
+
 	public void setSerie(String serie) {
 		this.serie = serie;
 	}
-	
+
 	@Column(name = "ra", nullable = false)
 	public String getRa() {
 		return ra;
@@ -67,24 +68,21 @@ public class Aluno implements Serializable{
 	public void setRa(String ra) {
 		this.ra = ra;
 	}
-	
-	@Column(name="usuario", nullable = false)
+
+	@Column(name = "usuario", nullable = false)
 	public String getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
-	@Column(name="senha", nullable = false)
+
+	@Column(name = "senha", nullable = false)
 	public String getSenha() {
 		return senha;
 	}
-	
-	
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
@@ -95,6 +93,4 @@ public class Aluno implements Serializable{
 				+ ", senha=" + senha + "]";
 	}
 
-	
-	
 }

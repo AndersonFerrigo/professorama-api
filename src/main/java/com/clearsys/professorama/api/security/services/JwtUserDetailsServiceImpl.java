@@ -15,29 +15,26 @@ import com.clearsys.professorama.api.services.ProfessorService;
 @Service
 public abstract class JwtUserDetailsServiceImpl implements UserDetailsService {
 
-public JwtUserDetailsServiceImpl() {
-	super();
-}
-	
+	public JwtUserDetailsServiceImpl() {
+		super();
+	}
+
 	@Autowired
 	private AlunoService alunoService;
-	
+
 	@Autowired
 	private ProfessorService professorService;
-	
-	
+
 	public UserDetails loadUserByUsername(String user, String senha) throws UsernameNotFoundException {
-		//Aluno aluno = alunoService.buscarLogin(user, senha);
+		// Aluno aluno = alunoService.buscarLogin(user, senha);
 		Optional<Professor> professor = professorService.buscarPorUsuario(user);
 		/*
-		if(aluno.isPresent()) {
-			return JwtUserFactory.createAluno(aluno.get());
-		}else if(professor.isPresent()) {
-			return JwtUserFactory.createProfessor(professor.get());
-		}
-		*/
+		 * if(aluno.isPresent()) { return JwtUserFactory.createAluno(aluno.get()); }else
+		 * if(professor.isPresent()) { return
+		 * JwtUserFactory.createProfessor(professor.get()); }
+		 */
 		throw new UsernameNotFoundException("Usuario ou senha errados");
-		
+
 	}
-	
+
 }

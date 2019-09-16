@@ -19,7 +19,7 @@ import com.clearsys.professorama.api.entities.Atividade;
 @SpringBootTest()
 @ActiveProfiles("test")
 public class AtividadeRepositoryTest {
-	
+
 	@Autowired
 	private AtividadeRepository atividadeRepository;
 
@@ -28,36 +28,35 @@ public class AtividadeRepositoryTest {
 	private static final String dataInicio = "13/05/2019";
 	private static final String dataEntrega = "27/05/2019";
 	private static final String descricao = "Descreva a ascenção do imperio Otomano";
-	
+
 	@Before
-	public  void setUp() throws Exception{
+	public void setUp() throws Exception {
 		Atividade atividade = new Atividade();
-		
+
 		atividade.setMateria(materia);
 		atividade.setSerie(serie);
-		atividade.setDataInicio(dataInicio);
+		
 		atividade.setDataEntrega(dataEntrega);
 		atividade.setDescricao(descricao);
-				
+
 		this.atividadeRepository.save(atividade);
 	}
-	
+
 	@After
 	public final void tearDown() {
 		this.atividadeRepository.deleteAll();
 	}
-		
 
 	@Test
 	public void buscaPorMateria() {
 		List<Atividade> atividade = this.atividadeRepository.findByMateria(materia);
-		assertEquals(materia,((Atividade) atividade).getMateria());
+		assertEquals(materia, ((Atividade) atividade).getMateria());
 	}
-	
+
 	@Test
 	public void buscaPorDataEntrega() {
 		Atividade atividade = this.atividadeRepository.findByDataEntrega(dataEntrega);
 		assertEquals(dataEntrega, atividade.getDataEntrega());
 	}
-	
+
 }

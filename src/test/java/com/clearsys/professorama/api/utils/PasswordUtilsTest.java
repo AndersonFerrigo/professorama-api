@@ -12,13 +12,13 @@ public class PasswordUtilsTest {
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Test
-	public void testSenhaNula() throws Exception{
+	public void testSenhaNula() throws Exception {
 		assertNull(PasswordUtils.gerarBCrypt(null));
 	}
 
 	@Test
-	public void testGeraHashSenha() throws Exception{
-		String hash  = PasswordUtils.gerarBCrypt(SENHA);
+	public void testGeraHashSenha() throws Exception {
+		String hash = PasswordUtils.gerarBCrypt(SENHA);
 		assertTrue(passwordEncoder.matches(SENHA, hash));
 	}
 

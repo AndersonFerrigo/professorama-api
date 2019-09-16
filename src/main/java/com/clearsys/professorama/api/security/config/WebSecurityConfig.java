@@ -34,49 +34,47 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailService;
 
 	@Autowired
-	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
+	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(this.userDetailService).passwordEncoder(passwordEncoder());
 	}
-	
+
 	@Bean
 	public UserDetailsService UserDetailsService() {
 		return super.userDetailsService();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
 		return new JwtAuthenticationTokenFilter();
 	}
-	
-	
+
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-	   return super.authenticationManagerBean();
+		return super.authenticationManagerBean();
 	}
-	
+
 	@Override
-	protected void configure(HttpSecurity httpSecurity)throws Exception{
-		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().authorizeRequests()
-		.antMatchers("/api/cadastrar-aluno", "/api/login-aluno","/api/aluno", "/api/login-professor").permitAll();
-		
-		//.antMatchers("/auth/**",
-					 
-			//		 "/api/atividade",
-				//	 "/v2/api-docs",
-					// "/configuration/security", 
-					// "/webjars/**")
-			//	.permitAll().anyRequest().authenticated();
-				httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-				httpSecurity.headers().cacheControl();
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers("/api/cadastrar-aluno", "/api/login-aluno", "/api/aluno", "/api/login-professor")
+				.permitAll();
+
+		// .antMatchers("/auth/**",
+
+		// "/api/atividade",
+		// "/v2/api-docs",
+		// "/configuration/security",
+		// "/webjars/**")
+		// .permitAll().anyRequest().authenticated();
+		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.headers().cacheControl();
 	}
-	
+
 }
-	
